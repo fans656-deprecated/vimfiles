@@ -1,0 +1,5 @@
+python mapRun('write', 'source %')
+python mapPairChar('()')
+python mapPairChar('[]')
+python mapPairChar('{}')
+python mapChar("'", insertPairCharLeft, "'", "'")
