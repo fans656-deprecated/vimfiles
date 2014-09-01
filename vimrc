@@ -8,9 +8,6 @@
 "       Child(Parent)
 "   python module
 
-execute pathogen#infect()
-source ~/vimfiles/vimpy.vim
-
 let g:hotkey_run = ';r'
 
 let $LANG = 'en_US'
@@ -27,17 +24,21 @@ set ignorecase
 set encoding=utf-8
 set fileencoding=utf-8
 
+set backspace=indent,eol,start
+set autoindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+execute pathogen#infect()
+
 filetype plugin indent on
 syntax enable
 set guifont=Inconsolata:h11:cANSI
 set background=dark
 colorscheme solarized
 
-set backspace=indent,eol,start
-set autoindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
+source ~/vimfiles/vimpy.vim
 
 " Insert -> Normal
 noremap! <c-l> <esc>
