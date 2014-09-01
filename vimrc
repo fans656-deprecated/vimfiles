@@ -7,6 +7,9 @@
 "       Class(object)
 "       Child(Parent)
 "   python module
+"   don't open new tab to edit vimrc if current file is none
+"   don't auto complete quotes in comment
+"   BufRead cd
 
 let g:hotkey_run = ';r'
 
@@ -38,8 +41,6 @@ set guifont=Inconsolata:h11:cANSI
 set background=dark
 colorscheme solarized
 
-source ~/vimfiles/vimpy.vim
-
 " Insert -> Normal
 noremap! <c-l> <esc>
 vnoremap <c-l> <esc>
@@ -64,21 +65,6 @@ noremap M %
 " do recorded action (using register q)
 nnoremap <m-.> @q
 
-" move around commands
-function! Ranged(pycmd, seq) range
-    execute 'python '.a:pycmd.'()'
-    if v:count1 > 1
-        execute 'normal! '.v:count1.a:seq
-    else
-        execute 'normal! '.a:seq
-    endif
-endfunction
-autocmd BufWinEnter * python saveView()
-nnoremap <silent> gg :python saveView()<cr>gg
-vnoremap <silent> gg :python saveView()<cr>gg
-nnoremap <silent> G :<c-u>call Ranged('saveView', 'G')<cr>
-nnoremap <silent> '' :python restoreView()<cr>
-
 " clipboard cut copy paste
 " normal mode copy one line
 noremap <m-y> "+yy
@@ -102,16 +88,12 @@ nnoremap ;q :wq<cr>
 " quit without save
 nnoremap ;Q :q!<cr>
 
-nnoremap <silent> ;d :python insertDatetime()<cr>
-
 " write & source vimrc & reset filetype
 nnoremap <silent> ,so :write \| source $MYVIMRC \| exe "set filetype=".&filetype<cr><esc>
 " edit vimrc
 nnoremap ,erc :tabedit $MYVIMRC<cr>
 " source and run (develop)
 nmap ,sr ,so;r
-" maximize/restore gui window
-nnoremap ,m :python toggleGuiWindowMaximized()<cr>
 
 " goto previous tab
 nnoremap <m-[> :tabprevious<cr>
@@ -130,33 +112,44 @@ nnoremap <m-s-1> :tabmove 0<cr>
 " move tab to last
 nnoremap <m-s-0> :tabmove<cr>
 
-" real user defined command
-" vim doesn't allow user defined command begin with lowercase letter
-" so we define a wrapping command 'U' which
-" takes the RUC(real user-defined command) name and its args
-" then the RUC can use an arbitrary name
-" RUC should use be defined like this:
-"   command! Uf6test ..
-" and used like this:
-"   test ..
-" executeUserCommand() will add the 'Uf6' prefix
-command! -nargs=+ U python executeUserCommand(<f-args>)
-" press ;; takes you Normal -> (RUC) Command
-nnoremap ;; :U<space>
-
-python defineCommand('reposition', 'python positionGuiWindow')
-python defineCommand('syntax', 'syntax off | syntax on')
-
-if !exists('g:first_run')
-    let g:first_run = 1
-    python positionGuiWindow()
-endif
-
 " finetune colorscheme
 highlight CursorLineNr gui=bold guifg='#49646c'
 highlight MatchParen gui=bold guifg='#839496' guibg='#00556b'
 
-" experimental
-vnoremap ' :<c-u>python encloseWith("'", "'")<cr>
-vnoremap " :<c-u>python encloseWith('"', '"')<cr>
-vnoremap ( :<c-u>python encloseWith('(', ')')<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" below uses python
+
+source <sfile>:p:h/vimimport.vim
+
+" insert date and time (2014-08-16 15:23:02)
+nnoremap <silent> ;d :python vimpy.insertDatetime()<cr>
+" maximize/restore gui window
+nnoremap ,m :python gui.toggleMaximized()<cr>
+
+python << endpython
+
+command.add(';r', name='run')
+
+if not gui.maximized:
+    gui.put('bottom right')
+
+endpython
+
+"" real user defined command
+"" vim doesn't allow user defined command begin with lowercase letter
+"" so we define a wrapping command 'U' which
+"" takes the RUC(real user-defined command) name and its args
+"" then the RUC can use an arbitrary name
+"" RUC should use be defined like this:
+""   command! Uf6test ..
+"" and used like this:
+""   test ..
+"" executeUserCommand() will add the 'Uf6' prefix
+"command! -nargs=+ U python executeUserCommand(<f-args>)
+"" press ;; takes you Normal -> (RUC) Command
+"nnoremap ;; :U<space>
+
+"" experimental
+"vnoremap ' :<c-u>python encloseWith("'", "'")<cr>
+"vnoremap " :<c-u>python encloseWith('"', '"')<cr>
+"vnoremap ( :<c-u>python encloseWith('(', ')')<cr>

@@ -1,4 +1,3 @@
-python << endpython
 import re
 from collections import OrderedDict
 
@@ -169,4 +168,3 @@ class Parser:
         if self.row == len(self.text):
             self.finished = True
         return line
-endpython
