@@ -70,6 +70,17 @@ nnoremap <m-.> @q
 noremap <m-y> "+yy
 " visual mode copy
 vnoremap <m-y> "+y
+" normal mode copy all
+" mz  - save cursor pos
+" H   - goto top screen line
+" mx  - mark top screen line
+" gg  - goto top buffer line
+" VG  - select till end buffer (i.e. all)
+" "+y - copy to clipboard
+" 'x  - back to marked top screen line
+" zt  - put at top screen
+" `z  - back to marked cursor pos
+noremap <m-s-y> mzHmxggVG"+y'xzt`z
 " normal mode cut one line
 noremap <m-d> "+dd
 " visual mode cut
