@@ -10,6 +10,7 @@
 "   don't open new tab to edit vimrc if current file is none
 "   don't auto complete quotes in comment
 "   BufRead cd
+set nocompatible
 
 let g:hotkey_run = ';r'
 
