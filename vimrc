@@ -20,6 +20,7 @@ set guioptions-=m	" remove menubar
 set noswapfile
 set number
 set relativenumber
+autocmd BufRead * cd %:p:h
 autocmd InsertEnter * set norelativenumber
 autocmd InsertLeave * set relativenumber
 set ruler
@@ -41,6 +42,8 @@ syntax enable
 set guifont=Inconsolata:h11:cANSI
 set background=dark
 colorscheme solarized
+
+set timeoutlen=500
 
 " Insert -> Normal
 noremap! <c-l> <esc>
@@ -65,6 +68,11 @@ noremap % M
 noremap M %
 " do recorded action (using register q)
 nnoremap <m-.> @q
+
+" clear & insert
+nnoremap ,cl ggcG
+" delete all
+nnoremap ,da ggdG
 
 " clipboard cut copy paste
 " normal mode copy one line
@@ -107,14 +115,19 @@ nnoremap ,erc :tabedit $MYVIMRC<cr>
 " source and run (develop)
 nmap ,sr ,so;r
 
+" tab
+nnoremap ,t<space> :tab<space>
+nnoremap ,te :tabe<space>
 " goto previous tab
-nnoremap <m-[> :tabprevious<cr>
+nnoremap <m-[> :tabprevious\|cd %:p:h<cr>
 " goto next tab
-nnoremap <m-]> :tabnext<cr>
+nnoremap <m-]> :tabnext\|cd %:p:h<cr>
 " goto tab 1-9
-for i in range(1, 9) | execute('nnoremap <a-'.i.'> :tabnext '.i.'<cr>') | endfor
+for i in range(1, 9)
+    execute('nnoremap <a-'.i.'> :tabnext '.i.'\|cd %:p:h<cr>')
+endfor
 " goto last tab
-nnoremap <m-0> :tablast<cr>
+nnoremap <m-0> :tablast\|cd %:p:h<cr>
 " move tab to previous
 nnoremap <m-{> :tabmove -1<cr>
 " move tab to next
@@ -147,19 +160,22 @@ if not gui.maximized:
 
 endpython
 
-"" real user defined command
-"" vim doesn't allow user defined command begin with lowercase letter
-"" so we define a wrapping command 'U' which
-"" takes the RUC(real user-defined command) name and its args
-"" then the RUC can use an arbitrary name
-"" RUC should use be defined like this:
-""   command! Uf6test ..
-"" and used like this:
-""   test ..
-"" executeUserCommand() will add the 'Uf6' prefix
-"command! -nargs=+ U python executeUserCommand(<f-args>)
-"" press ;; takes you Normal -> (RUC) Command
-"nnoremap ;; :U<space>
+" real user defined command
+" vim doesn't allow user defined command begin with lowercase letter
+" so we define a wrapping command 'U' which
+" takes the RUC(real user-defined command) name and its args
+" then the RUC can use an arbitrary name
+" RUC should use be defined like this:
+"   command! Uf6test ..
+" and used like this:
+"   test ..
+" executeUserCommand() will add the 'Uf6' prefix
+command! -nargs=+ U python vimpy.usercmd.run(<f-args>)
+" press ;; takes you Normal -> (RUC) Command
+nnoremap ;; :U<space>
+
+python vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
+python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
 
 "" experimental
 "vnoremap ' :<c-u>python encloseWith("'", "'")<cr>

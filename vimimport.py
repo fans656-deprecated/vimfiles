@@ -48,4 +48,4 @@ def vimimport(module, symbols=None):
     dire, name = getModuleDirAndName(path)
     sys.path.insert(0, dire)
     stmt = makeImportStatement(name, alias, symbols)
-    return stmt
+    return 'import sys; ' + stmt

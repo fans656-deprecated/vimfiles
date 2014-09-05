@@ -10,6 +10,9 @@ imap <m-j> =
 imap <m-k> (
 imap <m-l> )
 
+" TMP: copy program running results to clipboard
+nnoremap ;t :write \| let @+ = system('python '.expand('%'))<cr>
+
 inoremap ;$ <esc>A
 inoremap ;j <esc>o
 
@@ -27,6 +30,7 @@ python << endpython
 # nnoremap ;r :write \| !python %<cr>
 command['run'].set('write', '!python %')
 
+# TODO: pair char
 #vimpy.mapPairChar('()')
 #vimpy.mapPairChar('[]')
 

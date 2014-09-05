@@ -31,7 +31,10 @@ class CommandManager:
         self.commands = {}
 
     def __call__(self, cmd):
-        vim.command(cmd)
+        try:
+            vim.command(cmd)
+        except vim.error:
+            pass
 
     def add(self, seq, name=None):
         self.commands[name] = Command(seq, name)
@@ -77,6 +80,37 @@ class Gui(object):
 
 gui = Gui()
 
+class UserCommand(object):
+
+    def __init__(self, name, signature):
+        self.name = name
+        self.signature = signature
+        self.funcname = signature.split('(')[0]
+
+    def run(self, *args):
+        args = ', '.join(map(repr, args))
+        stmt = '{name}({args})'.format(
+                name=self.funcname,
+                args=args)
+        command('python exec {}'.format(stmt))
+
+class UserCommandManager(object):
+
+    def __init__(self):
+        self.cmds = {}
+
+    def __getitem__(self, key):
+        return self.cmds[key]
+
+    def __setitem__(self, key, value):
+        cmd = UserCommand(key, value)
+        self.cmds[cmd.name] = cmd
+
+    def run(self, name, *args):
+        self[name].run(*args)
+
+usercmd = UserCommandManager()
+
 # utils ############################################################
 # TODO: rewrite using new api
 # TODO: new line (above) based on line content
@@ -86,138 +120,15 @@ def insertDatetime():
     line = vim.current.line
     vim.current.line = line[:col + 1] + dt + line[col + 1:]
 
-#vim api ###########################################################
-#def getline(row=None):
-#    if not row:
-#        row = currow()
-#    return vim.current.buffer[row-1]
-#
-#def cursor(row=None, col=None, save=False):
-#    if row or col:
-#        if save:
-#            saveCursor()
-#        vim.current.window.cursor = (row or currow(), col or curcol())
-#    return vim.current.window.cursor
-#
-#def currow(row=None):
-#    if row:
-#        cursor(row=row)
-#    return cursor()[0]
-#
-#def curcol(col=None):
-#    if col:
-#        cursor(col=col)
-#    return cursor()[1]
-#
-#def curline(line=None):
-#    if line:
-#        vim.current.line = line
-#    return vim.current.line
-#
-#def curchar():
-#    return curline()[curcol()]
-#
-#def nextchar():
-#    try:
-#        return curline()[curcol() + 1]
-#    except IndexError:
-#        return None
-#
-#def var(name, value=None):
-#    if value is not None:
-#        command('let {} = {}'.format(name, value))
-#    return vim.eval(name)
-#
-#def register(name):
-#    return vim.eval('@{}'.format(name))
-#
-#def normal(seq):
-#    command('normal {}'.format(seq))
-#
-#def emulate(keys):
-#    vim.eval('feedkeys("{}", "n")'.format(keys.replace('"', '\\"')))
+def changeDirectory(path):
+    pass
 
-#utils #########################################################
-#def mapRun(*cmds):
-#    if len(cmds) == 1:
-#        cmd = cmds[0]
-#    else:
-#        cmd = joinCommands(*cmds)
-#    mapcmd = 'nnoremap {} :{}'.format(var('hotkey_run'), cmd)
-#    vim.command(mapcmd)
-#
-#def mapChar(char, func, *ars, **kws):
-#    call = makeCallString(func, *ars, **kws)
-#    command('inoremap {} <esc>:python {}<cr>'.format(char, call))
-#
-#def mapPairChar(charPair):
-#    left, right = charPair
-#    mapChar(left, util.insertPairCharLeft, left, right)
-#    mapChar(right, util.insertPairCharRight, right, left)
-#
-#def defineCommand(name, cmd):
-#    command('command! Uf6{} {}'.format(name, cmd))
-#
-#def do(func, *ars, **kws):
-#    return lambda: func(*ars, **kws)
-#
-#def joinCommands(*cmds):
-#    return '\\|'.join(cmds) + '<cr>'
-#
-#def makeCallString(func, *ars, **kws):
-#    ars = [repr(ar) for ar in ars]
-#    kws = ['{}={}'.format(repr(k), repr(v)) for k, v in kws.items()]
-#    return '{}({})'.format(func.__name__, ', '.join(ars + kws))
-#
-#def executeUserCommand(name, *args):
-#    name = 'Uf6' + name
-#    vim.command('{} {}'.format(name, ' '.join(args)))
-#
-#def stringPositionsInLine(line):
-#    inquote = False
-#    i = beg = end = 0
-#    while i < len(line):
-#        ch = line[i]
-#        if ch == '\\':
-#            i += 1
-#        elif not inquote and ch in '\'"':
-#            inquote = True
-#            beg = i
-#            quote = ch
-#        elif inquote and ch == quote:
-#            inquote = False
-#            end = i
-#            yield beg, end
-#        i += 1
-#
-#def isInString(row=None, col=None):
-#    if not row:
-#        row, col = cursor()
-#    for beg, end in stringPositionsInLine(getline(row)):
-#        if col < beg:
-#            return False
-#        elif beg <= col < end:
-#            return True
-#    return False
-#
-#def insertPairCharLeft(left=None, right=None):
-#    if isInString():
-#        emulate('a{}'.format(left))
-#    else:
-#        if curline():
-#            modeKey = 'a'
-#        else:
-#            modeKey = 'cc'
-#        emulate('{}{}{}\<esc>i'.format(modeKey, left, right))
-#
-#def insertPairCharRight(right=None, left=None):
-#    if isInString():
-#        emulate('a{}'.format(right))
-#    else:
-#        if nextchar() == right:
-#            emulate('la')
-#        else:
-#            emulate('a{}'.format(right))
-#
-#def encloseWith(left, right):
-#    emulate('\<esc>`<i{}\<esc>`>la{}\<esc>'.format(left, right))
+# TODO: open path
+def openDirectory(path=None):
+    # NOTE: currently can only open current directory
+    path = vim.eval('expand("%:p:h")')
+    cmd = 'silent! !explorer {}'.format(path)
+    command(cmd)
+
+def tabeMultipleFiles(pattern):
+    command('args {} | tab all'.format(pattern))
