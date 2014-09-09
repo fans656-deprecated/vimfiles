@@ -46,8 +46,8 @@ colorscheme solarized
 set timeoutlen=500
 
 " Insert -> Normal
-noremap! <c-l> <esc>
-vnoremap <c-l> <esc>
+noremap! <c-k> <esc>
+vnoremap <c-k> <esc>
 " relative line number
 noremap <m-r> :set relativenumber!<cr>
 " scroll down
@@ -77,6 +77,8 @@ nnoremap ,da ggdG
 " clipboard cut copy paste
 " normal mode copy one line
 noremap <m-y> "+yy
+" normal mode copy all
+noremap <m-Y> mzHmxggVG"+yy'xzt`z
 " visual mode copy
 vnoremap <m-y> "+y
 " normal mode copy all
@@ -107,11 +109,13 @@ nnoremap ;w :w<cr>
 nnoremap ;q :wq<cr>
 " quit without save
 nnoremap ;Q :q!<cr>
+" quit all without save
+nnoremap ,q :qall!<cr>
 
 " write & source vimrc & reset filetype
 nnoremap <silent> ,so :write \| source $MYVIMRC \| exe "set filetype=".&filetype<cr><esc>
 " edit vimrc
-nnoremap ,erc :tabedit $MYVIMRC<cr>
+nnoremap ,er :tabedit $MYVIMRC<cr>
 " source and run (develop)
 nmap ,sr ,so;r
 
@@ -137,27 +141,46 @@ nnoremap <m-s-1> :tabmove 0<cr>
 " move tab to last
 nnoremap <m-s-0> :tabmove<cr>
 
+" new line below current line & separate next line with blank line
+nnoremap <m-o> o<esc>ko
+" new line above current line & separate prev line with blank line
+nnoremap <m-O> O<esc>jO
+
+" new line without affect trailing characters
+inoremap <c-j> <end><cr>
+" one char right
+inoremap <c-l> <right>
+" delete char after the cursor
+inoremap <c-e> <del>
+" end of line
+inoremap <m-a> <end>
+
+" _
+inoremap <c-i> _
+" tab
+inoremap <m-i> <tab>
+
 " finetune colorscheme
 highlight CursorLineNr gui=bold guifg='#49646c'
 highlight MatchParen gui=bold guifg='#839496' guibg='#00556b'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " below uses python
-
 source <sfile>:p:h/vimimport.vim
 
 " insert date and time (2014-08-16 15:23:02)
 nnoremap <silent> ;d :python vimpy.insertDatetime()<cr>
+nnoremap <silent> ;1d o<esc>:python vimpy.insertDatetime()<cr>
+nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
+nmap <silent> ;D ;1d
 " maximize/restore gui window
-nnoremap ,m :python gui.toggleMaximized()<cr>
+nnoremap ,m :python vimpy.gui.toggleMaximized()<cr>
 
 python << endpython
+vimpy.command.add(';r', name='run')
 
-command.add(';r', name='run')
-
-if not gui.maximized:
-    gui.put('bottom right')
-
+if not vimpy.gui.maximized:
+    vimpy.gui.put('bottom right')
 endpython
 
 " real user defined command
@@ -177,7 +200,6 @@ nnoremap ;; :U<space>
 python vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
 python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
 
-"" experimental
-"vnoremap ' :<c-u>python encloseWith("'", "'")<cr>
-"vnoremap " :<c-u>python encloseWith('"', '"')<cr>
-"vnoremap ( :<c-u>python encloseWith('(', ')')<cr>
+inoremap <m-v> <esc>lv
+vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
+vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
