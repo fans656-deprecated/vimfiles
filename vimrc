@@ -109,8 +109,10 @@ nnoremap ;w :w<cr>
 nnoremap ;q :wq<cr>
 " quit without save
 nnoremap ;Q :q!<cr>
+" quit all with save
+nnoremap ,q :wall \| qall<cr>
 " quit all without save
-nnoremap ,q :qall!<cr>
+nnoremap ,Q :qall!<cr>
 
 " write & source vimrc & reset filetype
 nnoremap <silent> ,so :write \| source $MYVIMRC \| exe "set filetype=".&filetype<cr><esc>
@@ -141,13 +143,10 @@ nnoremap <m-s-1> :tabmove 0<cr>
 " move tab to last
 nnoremap <m-s-0> :tabmove<cr>
 
-" new line below current line & separate next line with blank line
-nnoremap <m-o> o<esc>ko
-" new line above current line & separate prev line with blank line
-nnoremap <m-O> O<esc>jO
-
 " new line without affect trailing characters
 inoremap <c-j> <end><cr>
+" one char left
+inoremap <m-h> <left>
 " one char right
 inoremap <c-l> <right>
 " delete char after the cursor

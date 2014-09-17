@@ -106,6 +106,7 @@ class Completer(object):
         self.hotkey_ = None
         self.autos = []
         self.manus = []
+        self.added = False
 
     @property
     def auto(self):
@@ -129,6 +130,8 @@ class Completer(object):
         vimpy.command('inoremap {} <c-r>=InsertPythonPrints("py.completer.complete()")<cr>'.format(self.hotkey))
 
     def add(self, patternBefore, patternAfter, action=None, auto=False):
+        if self.added:
+            return
         m = LineMatcher(patternBefore, patternAfter, action)
         if auto:
             self.autos.append(m)
@@ -140,7 +143,6 @@ class Completer(object):
         for m in matchers:
             if m.matched:
                 print m.action
-                return
 
 completer = Completer()
 
@@ -165,6 +167,10 @@ def defineFunction(withbody=False, underscore=False):
     name, args = line.split()
     if underscore:
         name = '__{}__'.format(name)
+    # TODO:
+    # class Foo:
+    #     def f(self): <- because inside a class
+    #         def g(a, b): <- because inside a function
     if line.inclass:
         args = ['self'] + args
 
