@@ -1,0 +1,7 @@
+2014-09-19 22:31:20
+py.Completer -> vimpy.Completer
+
+2014-09-20 08:31:35
+add 'return' completion to javascript.vim
+add 'for () {}' completion to javascript.vim
+add 'function' completion to javascript.vim

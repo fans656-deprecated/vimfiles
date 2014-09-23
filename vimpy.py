@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import vim
 from win32api import GetMonitorInfo, MonitorFromWindow
@@ -173,6 +174,13 @@ class Line(object):
     def blank(self):
         return not self.text.strip()
 
+    def splitByCol(self, col=None, exclusive=False):
+        if col is None:
+            col = self.col
+        col += exclusive
+        text = self.text
+        return text[:col], text[col:]
+
 class Visual(object):
 
     def __init__(self, beg=None, end=None):
@@ -214,9 +222,9 @@ class CommandManager:
         command('set list')
 
         # set named normal command
-        vimpy.command.add(';r', name='run') # in vimrc
-        vimpy.command['run'].set('write', '!python %') # in python.vim
-        vimpy.command['run'].set('write', 'source %') # in vim.vim
+        command.add(';r', name='run') # in vimrc
+        command['run'].set('write', '!python %') # in python.vim
+        command['run'].set('write', 'source %') # in vim.vim
     """
 
     def __init__(self):
@@ -304,6 +312,86 @@ class UserCommandManager(object):
         self[name].run(*args)
 
 usercmd = UserCommandManager()
+
+class LineMatcher(object):
+
+    class Checker(object):
+
+        def __init__(self, target, extractor=None, groupindex=None):
+            if isinstance(target, tuple):
+                target, extractor, groupindex = target
+            self.target = target
+            self.extractor = extractor
+            self.groupindex = groupindex
+
+        def check(self, text):
+            if self.extractor:
+                try:
+                    text = re.match(self.extractor, text).group(self.groupindex)
+                except AttributeError:
+                    return False
+                return text == self.target
+            else:
+                return re.match(self.target, text)
+
+    def __init__(self, left, right, action=None):
+        if not action:
+            right, action = '', right
+        self.checkers = map(LineMatcher.Checker, (left, right))
+        self.action = action
+
+    def match(self, line):
+        return all(c.check(t) for c, t in zip(self.checkers, line.splitByCol()))
+
+    @property
+    def matched(self):
+        return self.match(Line())
+
+class Completer(object):
+
+    def __init__(self):
+        self.hotkey_ = None
+        self.autos = []
+        self.manus = []
+        self.added = False
+
+    @property
+    def auto(self):
+        return self.auto_
+
+    @auto.setter
+    def auto(self, on):
+        self.auto_ = on
+        if on:
+            command('autocmd CursorMovedI * call FeedPythonPrints("vimpy.completer.complete(auto=True)")')
+
+    @property
+    def hotkey(self):
+        return self.hotkey_
+
+    @hotkey.setter
+    def hotkey(self, key):
+        if self.hotkey:
+            command('silent! iunmap {}'.format(self.hotkey))
+        self.hotkey_ = key
+        command('inoremap {} <c-r>=InsertPythonPrints("vimpy.completer.complete()")<cr>'.format(self.hotkey))
+
+    def add(self, patternBefore, patternAfter, action=None, auto=False):
+        if self.added:
+            return
+        m = LineMatcher(patternBefore, patternAfter, action)
+        if auto:
+            self.autos.append(m)
+        else:
+            self.manus.append(m)
+
+    def complete(self, auto=False):
+        matchers = self.autos if auto else self.manus
+        for m in matchers:
+            if m.matched:
+                print m.action
+
+completer = Completer()
 
 # utils ############################################################
 # TODO: rewrite using new api

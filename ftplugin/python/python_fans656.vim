@@ -17,64 +17,64 @@ python exec vimimport('py')
 python << endpython
 vimpy.command['run'].set('write', '!python %')
 
-if not py.completer.added:
+if not vimpy.completer.added:
     # completion
     word = lambda text: (text, '((.*\W)|^)(\w+)$', 3)
     keyword = lambda text: (text, '\s*({})$'.format(text), 1)
     # keywoards
-    py.completer.auto = True
+    vimpy.completer.auto = True
 
-    py.completer.add(keyword('if'), ' :\<left>', auto=True)
-    py.completer.add(keyword('else'), ':\<cr>', auto=True)
-    py.completer.add(keyword('elif'), ' :\<left>', auto=True)
-    py.completer.add(keyword('try'), ':\<cr>', auto=True)
-    py.completer.add(keyword('for'), '  in :' + '\<left>'*5, auto=True)
-    py.completer.add(keyword('while'), ' :\<left>', auto=True)
-    py.completer.add(('from', '^from$', 0), '  import ' + '\<c-left>\<left>', auto=True)
+    vimpy.completer.add(keyword('if'), ' :\<left>', auto=True)
+    vimpy.completer.add(keyword('else'), ':\<cr>', auto=True)
+    vimpy.completer.add(keyword('elif'), ' :\<left>', auto=True)
+    vimpy.completer.add(keyword('try'), ':\<cr>', auto=True)
+    vimpy.completer.add(keyword('for'), '  in :' + '\<left>'*5, auto=True)
+    vimpy.completer.add(keyword('while'), ' :\<left>', auto=True)
+    vimpy.completer.add(('from', '^from$', 0), '  import ' + '\<c-left>\<left>', auto=True)
 
-    py.completer.add(word('sf'), '\<bs>'*2 + 'self', auto=True)
-    py.completer.add(word('none'), '\<bs>'*4 + 'None', auto=True)
-    py.completer.add(word('true'), '\<bs>'*4 + 'True', auto=True)
-    py.completer.add(word('false'), '\<bs>'*5 + 'False', auto=True)
+    vimpy.completer.add(word('sf'), '\<bs>'*2 + 'self', auto=True)
+    vimpy.completer.add(word('none'), '\<bs>'*4 + 'None', auto=True)
+    vimpy.completer.add(word('true'), '\<bs>'*4 + 'True', auto=True)
+    vimpy.completer.add(word('false'), '\<bs>'*5 + 'False', auto=True)
 
-    py.completer.hotkey = '<c-f>'
-    py.completer.add(word('f'), '\<bs>format()\<left>')
-    py.completer.add(word('i'), '\<bs>import ')
-    py.completer.add(word('p'), '\<bs>print ')
-    py.completer.add(word('e'), '\<bs>except :\<left>')
-    py.completer.add(word('r'), '\<bs>return ')
-    py.completer.add(word('ri'), '\<bs>raise ')
-    py.completer.add(word('ps'), '\<bs>\<bs>pass')
+    vimpy.completer.hotkey = '<c-f>'
+    vimpy.completer.add(word('f'), '\<bs>format()\<left>')
+    vimpy.completer.add(word('i'), '\<bs>import ')
+    vimpy.completer.add(word('p'), '\<bs>print ')
+    vimpy.completer.add(word('e'), '\<bs>except :\<left>')
+    vimpy.completer.add(word('r'), '\<bs>return ')
+    vimpy.completer.add(word('ri'), '\<bs>raise ')
+    vimpy.completer.add(word('ps'), '\<bs>\<bs>pass')
 
     # exceptions
-    py.completer.add(word('ie'), '\<bs>\<bs>IndexError')
-    py.completer.add(word('ke'), '\<bs>\<bs>KeyError')
-    py.completer.add(word('ve'), '\<bs>\<bs>ValueError')
-    py.completer.add(word('si'), '\<bs>\<bs>StopIteration')
-    py.completer.add(word('ex'), '\<bs>\<bs>Exception')
+    vimpy.completer.add(word('ie'), '\<bs>\<bs>IndexError')
+    vimpy.completer.add(word('ke'), '\<bs>\<bs>KeyError')
+    vimpy.completer.add(word('ve'), '\<bs>\<bs>ValueError')
+    vimpy.completer.add(word('si'), '\<bs>\<bs>StopIteration')
+    vimpy.completer.add(word('ex'), '\<bs>\<bs>Exception')
 
-    py.completer.add(word('eie'), '\<bs>\<bs>\<bs>except IndexError:\<cr>')
-    py.completer.add(word('eke'), '\<bs>\<bs>\<bs>except KeyError:\<cr>')
-    py.completer.add(word('eve'), '\<bs>\<bs>\<bs>except ValueError:\<cr>')
-    py.completer.add(word('esi'), '\<bs>\<bs>\<bs>except StopIteration:\<cr>')
-    py.completer.add(word('eex'), '\<bs>\<bs>\<bs>except Exception:\<cr>')
+    vimpy.completer.add(word('eie'), '\<bs>\<bs>\<bs>except IndexError:\<cr>')
+    vimpy.completer.add(word('eke'), '\<bs>\<bs>\<bs>except KeyError:\<cr>')
+    vimpy.completer.add(word('eve'), '\<bs>\<bs>\<bs>except ValueError:\<cr>')
+    vimpy.completer.add(word('esi'), '\<bs>\<bs>\<bs>except StopIteration:\<cr>')
+    vimpy.completer.add(word('eex'), '\<bs>\<bs>\<bs>except Exception:\<cr>')
     
     # modules
-    py.completer.add(word('it'), '\<bs>\<bs>itertools')
-    py.completer.add(word('dt'), '\<bs>\<bs>datetime')
+    vimpy.completer.add(word('it'), '\<bs>\<bs>itertools')
+    vimpy.completer.add(word('dt'), '\<bs>\<bs>datetime')
     
     # functions
-    py.completer.add(word('td'), '\<c-w>timedelta')
+    vimpy.completer.add(word('td'), '\<c-w>timedelta')
 
     # others
-    py.completer.add(word('ii'), '\<bs>'*2 + 'isinstance(, )' + '\<left>'*3)
-    py.completer.add(word('pro'), '\<bs>'*3 + 'property')
-    py.completer.add(word('set'), '\<bs>'*3 + 'setter')
-    py.completer.add(word('main'), '\<bs>'*4 + r"if __name__ == '__main__':\<cr>")
-    py.completer.add(word('doc'), '\<bs>'*3 + '"""\<cr>"""\<esc>O\<space>\<space>')
+    vimpy.completer.add(word('ii'), '\<bs>'*2 + 'isinstance(, )' + '\<left>'*3)
+    vimpy.completer.add(word('pro'), '\<bs>'*3 + 'property')
+    vimpy.completer.add(word('set'), '\<bs>'*3 + 'setter')
+    vimpy.completer.add(word('main'), '\<bs>'*4 + r"if __name__ == '__main__':\<cr>")
+    vimpy.completer.add(word('doc'), '\<bs>'*3 + '"""\<cr>"""\<esc>O\<space>\<space>')
 
     del word
-    py.completer.added = True
+    vimpy.completer.added = True
 endpython
 autocmd BufWritePre *.py python vimpy.removeTrailingWhitespaces()
 
