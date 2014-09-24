@@ -1,6 +1,3 @@
-set shiftwidth=2
-set tabstop=2
-
 python << endpython
 vimpy.command['run'].set('write', r'silent !{}\t.html'.format(
     vim.eval('expand("%:p:h")')))

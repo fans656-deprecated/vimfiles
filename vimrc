@@ -162,6 +162,7 @@ inoremap <m-i> <tab>
 " finetune colorscheme
 highlight CursorLineNr gui=bold guifg='#49646c'
 highlight MatchParen gui=bold guifg='#839496' guibg='#00556b'
+nnoremap <F10> :execute 'highlight '.synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " below uses python

@@ -14,8 +14,8 @@ def checkEnos():
     if 'enos' in path:
         vimpy.usercmd['upload'] = 'uploadEnos()'
         vimpy.usercmd['commit'] = 'commitEnos()'
-    if fname == 'diary.txt':
-        vimpy.command('nmap ;n Go<esc>o<esc>;do')
+        if fname and fname in ['default.txt', 'diary.txt']:
+            vimpy.command('nmap ;n Go<esc>o<esc>;do')
         
 def uploadEnos(path=None):
     commitEnos(path)
