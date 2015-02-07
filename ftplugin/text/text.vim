@@ -7,6 +7,8 @@ import subprocess
 import datetime
 import base64
 
+vimpy.command('nmap ;n Go<esc>o<esc>;do')
+
 def checkEnos():
     path = vim.eval('expand("%:p")')
     fname = os.path.basename(path)
@@ -14,8 +16,6 @@ def checkEnos():
     if 'enos' in path:
         vimpy.usercmd['upload'] = 'uploadEnos()'
         vimpy.usercmd['commit'] = 'commitEnos()'
-        if fname and fname in ['default.txt', 'diary.txt']:
-            vimpy.command('nmap ;n Go<esc>o<esc>;do')
         
 def uploadEnos(path=None):
     commitEnos(path)

@@ -1,5 +1,6 @@
 " normal
 highlight jsGlobalObjects gui=bold guifg='#839496'
+highlight Special gui=italic guifg='#839496'
 highlight jsFuncName guifg='#839496'
 "highlight jsSpecial gui=bold guifg='#839496'
 
@@ -19,5 +20,5 @@ highlight javaScriptLogicSymbols  guifg='#72A974'
 highlight jsOperator  guifg='#72A974'
 
 " blue
-highlight jsFunction  guifg='#268bd2'
+highlight jsFunction  guifg='#2E5F82'
 highlight jsStorageClass  guifg='#268bd2'
