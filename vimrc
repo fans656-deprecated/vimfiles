@@ -54,10 +54,14 @@ noremap <m-r> :set relativenumber!<cr>
 nnoremap <c-j> <c-e>
 " scroll up
 nnoremap <c-k> <c-y>
+" visual line down
+noremap j gj
+" visual line up
+noremap k gk
 " goto head of line
-noremap H ^
+noremap H g^
 " goto end of line
-noremap L $
+noremap L g$
 " goto top screen line
 noremap 0 H
 " goto bottom screen line
