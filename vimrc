@@ -28,6 +28,10 @@ set incsearch
 set ignorecase
 set encoding=utf-8
 set fileencoding=utf-8
+set lines=25
+set columns=80
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+let &colorcolumn="".join(range(80,999),",")
 
 set backspace=indent,eol,start
 set autoindent
@@ -39,7 +43,7 @@ execute pathogen#infect()
 
 filetype plugin indent on
 syntax enable
-set guifont=Inconsolata:h11:cANSI
+set guifont=Consolas:h10:cANSI
 set background=dark
 colorscheme solarized
 
@@ -47,6 +51,7 @@ set timeoutlen=500
 
 " Insert -> Normal
 noremap! <c-k> <esc>
+inoremap <c-s> <c-k>
 vnoremap <c-k> <esc>
 " relative line number
 noremap <m-r> :set relativenumber!<cr>
@@ -54,6 +59,8 @@ noremap <m-r> :set relativenumber!<cr>
 nnoremap <c-j> <c-e>
 " scroll up
 nnoremap <c-k> <c-y>
+" quit (conflic with window navigate: c-w l)
+" nnoremap <c-w> :confirm qall<cr>
 " visual line down
 noremap j gj
 " visual line up
@@ -153,10 +160,10 @@ inoremap <c-j> <end><cr>
 inoremap <m-h> <left>
 " one char right
 inoremap <c-l> <right>
-" delete char after the cursor
-inoremap <c-e> <del>
 " end of line
 inoremap <m-a> <end>
+" delete char after the cursor
+inoremap <c-e> <del>
 
 " _
 inoremap <c-i> _
@@ -179,6 +186,7 @@ nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
 nmap <silent> ;D ;1d
 " maximize/restore gui window
 nnoremap ,m :python vimpy.gui.toggleMaximized()<cr>
+nnoremap ,l :python vimpy.gui.toggleNumLines()<cr>
 
 python << endpython
 vimpy.command.add(';r', name='run')
@@ -203,6 +211,7 @@ nnoremap ;; :U<space>
 
 python vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
 python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
+python vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
 
 inoremap <m-v> <esc>lv
 vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>

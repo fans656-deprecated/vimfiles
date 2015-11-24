@@ -11,11 +11,13 @@ inoremap " ""<left>
 
 " read run result into clipboard
 nnoremap ;t :let @+ = system('python '.expand('%'))<cr>
+" interactive run
+nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
 python exec vimimport('py')
 
 python << endpython
-vimpy.command['run'].set('write', '!python %')
+vimpy.command['run'].set('write', '!start cmd /C "python \"%\"" & pause<cr>')
 
 if not vimpy.completer.added:
     # completion
@@ -45,13 +47,15 @@ if not vimpy.completer.added:
     vimpy.completer.add(word('r'), '\<bs>return ')
     vimpy.completer.add(word('ri'), '\<bs>raise ')
     vimpy.completer.add(word('ps'), '\<bs>\<bs>pass')
+    vimpy.completer.add(word('en'), '\<bs>\<bs>enumerate')
 
     # exceptions
+    vimpy.completer.add(word('ae'), '\<bs>\<bs>AttributeError')
+    vimpy.completer.add(word('ex'), '\<bs>\<bs>Exception')
     vimpy.completer.add(word('ie'), '\<bs>\<bs>IndexError')
     vimpy.completer.add(word('ke'), '\<bs>\<bs>KeyError')
-    vimpy.completer.add(word('ve'), '\<bs>\<bs>ValueError')
     vimpy.completer.add(word('si'), '\<bs>\<bs>StopIteration')
-    vimpy.completer.add(word('ex'), '\<bs>\<bs>Exception')
+    vimpy.completer.add(word('ve'), '\<bs>\<bs>ValueError')
 
     vimpy.completer.add(word('eie'), '\<bs>\<bs>\<bs>except IndexError:\<cr>')
     vimpy.completer.add(word('eke'), '\<bs>\<bs>\<bs>except KeyError:\<cr>')
@@ -60,8 +64,11 @@ if not vimpy.completer.added:
     vimpy.completer.add(word('eex'), '\<bs>\<bs>\<bs>except Exception:\<cr>')
     
     # modules
-    vimpy.completer.add(word('it'), '\<bs>\<bs>itertools')
+    vimpy.completer.add(word('co'), '\<bs>\<bs>collections')
     vimpy.completer.add(word('dt'), '\<bs>\<bs>datetime')
+    vimpy.completer.add(word('it'), '\<bs>\<bs>itertools')
+    vimpy.completer.add(word('th'), '\<bs>\<bs>threading')
+    vimpy.completer.add(word('qu'), '\<bs>\<bs>Queue')
     
     # functions
     vimpy.completer.add(word('td'), '\<c-w>timedelta')
@@ -92,3 +99,15 @@ inoremap ;du <esc>:python py.defineFunction(underscore=True)<cr>
 inoremap ;dpu <esc>:python py.defineFunction(withbody=True, underscore=True)<cr>
 " self.foo = foo
 inoremap ;is <esc>:python py.assignToSelf()<cr>
+" PySide
+inoremap ;qi from PySide.QtCore import *<cr>from PySide.QtGui import *<esc>
+" PySide
+inoremap ;qp class Widget(QDialog):<cr>
+            \<cr>
+            \def __init__(self, parent=None):<cr>
+            \super(Widget, self).__init__(parent)<cr>
+            \<cr><c-u>
+            \app = QApplication([])<cr>
+            \w = Widget()<cr>
+            \w.show()<cr>
+            \app.exec_()<esc>5k

@@ -1,3 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =5
 let g:netrw_dirhist_1='E:/Prog/android-html5/hello/www/css/images'
+let g:netrw_dirhist_2='D:/Depot/Private/vimfiles/ftplugin/cpp'
+let g:netrw_dirhist_3='C:\Users\Administrator\.android'
+let g:netrw_dirhist_4='D:/Source/Haskell'
+let g:netrw_dirhist_5='D:/Source/Python/poshare/classroom/static'

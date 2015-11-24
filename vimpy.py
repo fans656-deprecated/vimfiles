@@ -262,8 +262,13 @@ class Gui(object):
     def toggleMaximized(self):
         if self.maximized:
             self.restore()
+            self.put('bottom right')
         else:
             self.maximize()
+
+    def toggleNumLines(self):
+        vim.options['lines'] = 40 if vim.options['lines'] <= 25 else 25
+        vim.options['columns'] = 100 if vim.options['columns'] <= 80 else 80
 
     def put(self, where):
         """
@@ -276,7 +281,7 @@ class Gui(object):
         monitor = MonitorFromWindow(0, MONITOR_DEFAULTTOPRIMARY)
         rcWork = GetMonitorInfo(monitor)['Work']
         right, bottom = rcWork[2:]
-        right -= 646
+        right -= 446
         bottom -= 424
         command('winpos {} {}'.format(right, bottom))
 
@@ -414,6 +419,12 @@ def openDirectory(path=None):
 
 def tabeMultipleFiles(pattern):
     command('args {} | tab all'.format(pattern))
+
+def openCmd(path=None):
+    # NOTE: currently can only open current directory
+    path = vim.eval('expand("%:p:h")')
+    cmd = 'silent! !start cmd /K "cd /d {}"'.format(path)
+    command(cmd)
 
 def removeTrailingWhitespaces():
     command('let g:py_view = winsaveview()')

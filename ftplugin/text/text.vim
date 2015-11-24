@@ -23,18 +23,19 @@ def uploadEnos(path=None):
 
 def commitEnos(path=None):
     if not path:
-        path = r'E:\Private\enos'
+        path = 'D:/Private/enos'
     des = os.path.join(path, 'diary.rar')
-    winrar = r'D:\System\WinRAR\WinRAR.exe'
+    winrar = 'D:/System/WinRAR4.11/WinRAR.exe'
     if os.path.exists(des):
         subprocess.call(r'del {}'.format(des), shell=True)
-    subprocess.call(r'cd /d {}'.format(path), shell=True)
-    password = open('E:/Private/enosp.txt').readlines()[0].strip()
+    subprocess.call('cd /d {}'.format(path), shell=True)
+    password = open('D:/Private/enosp.txt').readlines()[0].strip()
     password = base64.b64decode(password)
-    subprocess.call(r'{winrar} a diary.rar diary.txt -p{password}'.format(
+    subprocess.call('{winrar} a diary.rar diary.txt -p{password}'.format(
         winrar=winrar,
         password=password))
-    subprocess.call(r'git add --all .', shell=True)
+    subprocess.call('git add --all .', shell=True)
     dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    subprocess.call(r'git commit -m "{}"'.format(dt), shell=True)
+    subprocess.call('git commit -m "{}"'.format(dt), shell=True)
+    subprocess.Popen(('git', 'push'))
 endpython

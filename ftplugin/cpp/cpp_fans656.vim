@@ -8,7 +8,7 @@ highlight Folded guifg=#0B4250 guibg=#002b36
 
 nnoremap ,f :set foldenable!<cr>
 
-nnoremap ;r :w \| !g++ % -o t.exe & t.exe<cr>
+nnoremap ;r :write \| !start cmd /C "g++ *.cpp -o t.exe" & t.exe & pause<cr><cr>
 nnoremap ;c :w \| !g++ % -o t.exe<cr>
 
 nnoremap <m-o> jO<esc>ko
@@ -17,17 +17,17 @@ nnoremap <m-O> ko<esc>jO
 python exec vimimport('cpp')
 
 inoremap #i #include <><left>
-inoremap ;cls class ``<cr>{<cr>public:<cr><cr>private:<cr>};<esc>?``<cr>2s
-inoremap ;main int main()<cr>{<cr>return 0;<cr>}<esc>kO
+inoremap ;cls class `` {<cr>public:<cr><cr>private:<cr>};<esc>?``<cr>2s
+inoremap ;main int main() {<cr>return 0;<cr>}<esc>kO
 inoremap ;sco std::cout
 inoremap ;sel std::endl
 inoremap { {<cr>}<esc>O
-inoremap ( ()<left>
+"inoremap ( ()<left>
 inoremap ;swi switch (``) {<cr>default:<cr>break;<cr>}<esc>?``<cr>2s
 inoremap ;tem template<typename T>
 imap ;tcl ;tem<cr>;cls
-inoremap << <space><<<space>
-inoremap >> <space>>><space>
+"inoremap << <space><<<space>
+"inoremap >> <space>>><space>
 inoremap s: std::
 
 inoremap <m-j> <esc>o
