@@ -281,12 +281,15 @@ class Gui(object):
             currently the where argument is not used,
             always put to bottom right
         """
-        monitor = MonitorFromWindow(0, MONITOR_DEFAULTTOPRIMARY)
-        rcWork = GetMonitorInfo(monitor)['Work']
-        right, bottom = rcWork[2:]
-        right -= 446
-        bottom -= 424
-        command('winpos {} {}'.format(right, bottom))
+        try:
+            monitor = MonitorFromWindow(0, MONITOR_DEFAULTTOPRIMARY)
+            rcWork = GetMonitorInfo(monitor)['Work']
+            right, bottom = rcWork[2:]
+            right -= 446
+            bottom -= 424
+            command('winpos {} {}'.format(right, bottom))
+        except Exception:
+            pass
 
 gui = Gui()
 
