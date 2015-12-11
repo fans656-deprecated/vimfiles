@@ -99,6 +99,8 @@ inoremap ;du <esc>:python py.defineFunction(underscore=True)<cr>
 inoremap ;dpu <esc>:python py.defineFunction(withbody=True, underscore=True)<cr>
 " self.foo = foo
 inoremap ;is <esc>:python py.assignToSelf()<cr>
+" from __future__ import ...
+inoremap ;fu from __future__ import absolute_import, print_function, division<esc>
 " PySide
 inoremap ;qi from PySide.QtCore import *<cr>from PySide.QtGui import *<esc>
 " PySide
@@ -111,3 +113,6 @@ inoremap ;qp class Widget(QDialog):<cr>
             \w = Widget()<cr>
             \w.show()<cr>
             \app.exec_()<esc>5k
+
+highlight ColorColumn ctermbg=235 guibg=#004050
+let &colorcolumn="".join(range(80,999),",")

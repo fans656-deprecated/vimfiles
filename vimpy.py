@@ -2,8 +2,11 @@ import datetime
 import re
 
 import vim
-from win32api import GetMonitorInfo, MonitorFromWindow
-from win32con import MONITOR_DEFAULTTOPRIMARY
+try:
+    from win32api import GetMonitorInfo, MonitorFromWindow
+    from win32con import MONITOR_DEFAULTTOPRIMARY
+except ImportError:
+    pass
 
 def cursor():
     row, col = vim.current.window.cursor

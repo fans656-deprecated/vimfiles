@@ -30,8 +30,6 @@ set encoding=utf-8
 set fileencoding=utf-8
 set lines=25
 set columns=80
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
-let &colorcolumn="".join(range(80,999),",")
 
 set backspace=indent,eol,start
 set autoindent
