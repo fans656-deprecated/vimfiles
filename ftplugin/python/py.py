@@ -79,7 +79,7 @@ def defineFunction(withbody=False, underscore=False):
     line = Line()
     name, args = line.split()
     if underscore:
-        name = '__{}__'.format(name)
+        name = '__{0}__'.format(name)
     # TODO:
     # class Foo:
     #     def f(self): <- because inside a class
@@ -102,4 +102,4 @@ def assignToSelf():
             indent=line.indentation, var=var)
     lines = map(f, vs)
     line.text = lines
-    vimpy.feed('{}jo'.format(len(lines) - 1))
+    vimpy.feed('{0}jo'.format(len(lines) - 1))

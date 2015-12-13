@@ -34,7 +34,7 @@ def prevLines(row=None):
 
 def feed(keys, mapped=False):
     keys.replace('"', '\"')
-    vim.command('call feedkeys("{}", "{}")'.format(keys,
+    vim.command('call feedkeys("{0}", "{1}")'.format(keys,
         'm' if mapped else 'n'))
 
 class Cursor(object):
@@ -217,7 +217,7 @@ class Command:
     def set(self, *cmds):
         self.cmds = cmds
         # nnoremap ;r :write \| !python %<cr>
-        command('nnoremap {} :{}<cr>'.format(self.seq, '\\|'.join(cmds)))
+        command('nnoremap {0} :{1}<cr>'.format(self.seq, '\\|'.join(cmds)))
 
 class CommandManager:
     """
@@ -287,7 +287,7 @@ class Gui(object):
             right, bottom = rcWork[2:]
             right -= 446
             bottom -= 424
-            command('winpos {} {}'.format(right, bottom))
+            command('winpos {0} {1}'.format(right, bottom))
         except Exception:
             pass
 
@@ -305,7 +305,7 @@ class UserCommand(object):
         stmt = '{name}({args})'.format(
                 name=self.funcname,
                 args=args)
-        command('python exec {}'.format(stmt))
+        command('python exec {0}'.format(stmt))
 
 class UserCommandManager(object):
 
@@ -383,9 +383,9 @@ class Completer(object):
     @hotkey.setter
     def hotkey(self, key):
         if self.hotkey:
-            command('silent! iunmap {}'.format(self.hotkey))
+            command('silent! iunmap {0}'.format(self.hotkey))
         self.hotkey_ = key
-        command('inoremap {} <c-r>=InsertPythonPrints("vimpy.completer.complete()")<cr>'.format(self.hotkey))
+        command('inoremap {0} <c-r>=InsertPythonPrints("vimpy.completer.complete()")<cr>'.format(self.hotkey))
 
     def add(self, patternBefore, patternAfter, action=None, auto=False):
         if self.added:
@@ -420,16 +420,16 @@ def changeDirectory(path):
 def openDirectory(path=None):
     # NOTE: currently can only open current directory
     path = vim.eval('expand("%:p:h")')
-    cmd = 'silent! !explorer {}'.format(path)
+    cmd = 'silent! !explorer {0}'.format(path)
     command(cmd)
 
 def tabeMultipleFiles(pattern):
-    command('args {} | tab all'.format(pattern))
+    command('args {0} | tab all'.format(pattern))
 
 def openCmd(path=None):
     # NOTE: currently can only open current directory
     path = vim.eval('expand("%:p:h")')
-    cmd = 'silent! !start cmd /K "cd /d {}"'.format(path)
+    cmd = 'silent! !start cmd /K "cd /d {0}"'.format(path)
     command(cmd)
 
 def removeTrailingWhitespaces():

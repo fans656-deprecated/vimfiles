@@ -14,7 +14,7 @@ def vimimport(module, symbols=None):
         exec vimimport('foo', '*')
         exec vimimport('foo', 'bar, baz')
     """
-    
+
     def getModulePathAndAlias(path):
         # maybe 'foo as fo'
         names = path.split(' as ')
@@ -25,7 +25,7 @@ def vimimport(module, symbols=None):
         else:
             path, alias = names[0], None
         return path, alias
-    
+
     def getModuleDirAndName(path):
         # module path is specified relatively
         # to the current script's directory
@@ -36,11 +36,11 @@ def vimimport(module, symbols=None):
 
     def makeImportStatement(name, alias, symbols):
         if alias:
-            stmt = 'import {} as {}'.format(name, alias)
+            stmt = 'import {0} as {1}'.format(name, alias)
         else:
-            stmt = 'import {}'.format(name)
+            stmt = 'import {0}'.format(name)
         if symbols:
-            stmt += '; from {} import {}'.format(name, symbols)
+            stmt += '; from {0} import {1}'.format(name, symbols)
         stmt += '; del sys.path[0]'
         return stmt
 
