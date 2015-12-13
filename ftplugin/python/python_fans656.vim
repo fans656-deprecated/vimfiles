@@ -22,7 +22,7 @@ vimpy.command['run'].set('write', '!start cmd /C "python \"%\"" & pause<cr>')
 if not vimpy.completer.added:
     # completion
     word = lambda text: (text, '((.*\W)|^)(\w+)$', 3)
-    keyword = lambda text: (text, '\s*({})$'.format(text), 1)
+    keyword = lambda text: (text, '\s*({0})$'.format(text), 1)
     # keywoards
     vimpy.completer.auto = True
 
