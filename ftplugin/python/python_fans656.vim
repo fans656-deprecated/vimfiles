@@ -116,3 +116,8 @@ inoremap ;qp class Widget(QDialog):<cr>
 
 highlight ColorColumn ctermbg=235 guibg=#004050
 let &colorcolumn="".join(range(80,999),",")
+
+if !has('gui_running')
+    nnoremap ;r :write\|!python %<cr>
+    nnoremap ;i :write\|!python -i %<cr>
+endif

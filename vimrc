@@ -28,8 +28,10 @@ set incsearch
 set ignorecase
 set encoding=utf-8
 set fileencoding=utf-8
-set lines=25
-set columns=80
+if has('gui_running')
+    set lines=25
+    set columns=80
+endif
 
 set backspace=indent,eol,start
 set autoindent
