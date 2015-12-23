@@ -8,7 +8,11 @@ highlight Folded guifg=#0B4250 guibg=#002b36
 
 nnoremap ,f :set foldenable!<cr>
 
-nnoremap ;r :write \| !start cmd /C "g++ *.cpp -o t.exe" & t.exe & pause<cr><cr>
+if has('gui_running')
+    nnoremap ;r :write \| !start cmd /C "g++ *.cpp -o t.exe" & t.exe & pause<cr><cr>
+else
+    nnoremap ;r :write \| !g++ *.cpp -o a.out & ./a.out<cr>
+endif
 nnoremap ;c :w \| !g++ % -o t.exe<cr>
 
 nnoremap <m-o> jO<esc>ko
