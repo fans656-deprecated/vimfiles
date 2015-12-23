@@ -11,7 +11,7 @@ nnoremap ,f :set foldenable!<cr>
 if has('gui_running')
     nnoremap ;r :write \| !start cmd /C "g++ *.cpp -o t.exe" & t.exe & pause<cr><cr>
 else
-    nnoremap ;r :write \| !g++ *.cpp -o a.out && ./a.out<cr>
+    nnoremap ;r :write \| !clear && g++ *.cpp -o a.out && ./a.out<cr>
 endif
 nnoremap ;c :w \| !g++ % -o t.exe<cr>
 
