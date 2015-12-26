@@ -118,6 +118,6 @@ highlight ColorColumn ctermbg=235 guibg=#004050
 let &colorcolumn="".join(range(80,999),",")
 
 if !has('gui_running')
-    nnoremap ;r :write\|!clear&&python %<cr>
-    nnoremap ;i :write\|!clear&&python -i %<cr>
+    nnoremap ;r :write\|!clear; sudo -A python %<cr>
+    nnoremap ;i :write\|!clear; python -i %<cr>
 endif
