@@ -398,9 +398,19 @@ class Completer(object):
 
     def complete(self, auto=False):
         matchers = self.autos if auto else self.manus
-        for m in matchers:
+        # [update 2016-05-27 13:30:26]
+        # when we switch python versions
+        # we add new LineMatcher to the tail of the autos/manus
+        # so reversed to give the new added matcher higher priority
+        # actually we should replace the old one
+        # but when this is initially written, I didn't foresee the need
+        # to modify completer after initial script load
+        # and I can't steadily figure out what's going on with all this mess
+        # so, let's (temporarily) be settled with this inefficient hack
+        for m in reversed(matchers):
             if m.matched:
                 print m.action
+                break
 
 completer = Completer()
 

@@ -181,9 +181,9 @@ source <sfile>:p:h/vimimport.vim
 
 " insert date and time (2014-08-16 15:23:02)
 nnoremap <silent> ;d :python vimpy.insertDatetime()<cr>
-nnoremap <silent> ;1d o<esc>:python vimpy.insertDatetime()<cr>
-nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
-nmap <silent> ;D ;1d
+"nnoremap <silent> ;1d o<esc>:python vimpy.insertDatetime()<cr>
+"nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
+"nmap <silent> ;D ;1d
 " maximize/restore gui window
 nnoremap ,m :python vimpy.gui.toggleMaximized()<cr>
 nnoremap ,l :python vimpy.gui.toggleNumLines()<cr>
@@ -216,3 +216,15 @@ python vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
 inoremap <m-v> <esc>lv
 vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
 vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
+
+python << endpython
+import os
+
+def bufwinenter():
+    fpath = vim.eval('expand("%:p")')
+    basepath = os.path.dirname(fpath)
+    if r'Private\blog' in basepath:
+        vim.command(r'nnoremap ;r :w\|!python "D:\Source\Python\blog_generator\main.py"<cr><cr>')
+endpython
+
+autocmd BufWinEnter * python bufwinenter()

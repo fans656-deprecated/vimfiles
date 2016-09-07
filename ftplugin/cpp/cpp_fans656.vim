@@ -9,11 +9,13 @@ highlight Folded guifg=#0B4250 guibg=#002b36
 nnoremap ,f :set foldenable!<cr>
 
 if has('gui_running')
-    nnoremap ;r :write \| !start cmd /C "g++ *.cpp -o t.exe" & t.exe & pause<cr><cr>
+    nnoremap ;r :write \| !start cmd /C "g++ -std=c++11 *.cpp -o t.exe" && t.exe & pause<cr><cr>
 else
     nnoremap ;r :write \| !clear && g++ *.cpp -o a.out && ./a.out<cr>
 endif
 nnoremap ;c :w \| !g++ % -o t.exe<cr>
+nnoremap ;s :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O0 % -o t.s && start gvim t.s & exit"<cr><cr>
+nnoremap ;S :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O3 % -o t.s && start gvim t.s & exit"<cr><cr>
 
 nnoremap <m-o> jO<esc>ko
 nnoremap <m-O> ko<esc>jO
@@ -22,10 +24,10 @@ python exec vimimport('cpp')
 
 inoremap #i #include <><left>
 inoremap ;cls class `` {<cr>public:<cr><cr>private:<cr>};<esc>?``<cr>2s
-inoremap ;main int main() {<cr>return 0;<cr>}<esc>kO
+inoremap ;main int main() {<cr>}<esc>O
 inoremap ;sco std::cout
 inoremap ;sel std::endl
-inoremap { {<cr>}<esc>O
+"inoremap { {<cr>}<esc>O
 "inoremap ( ()<left>
 inoremap ;swi switch (``) {<cr>default:<cr>break;<cr>}<esc>?``<cr>2s
 inoremap ;tem template<typename T>

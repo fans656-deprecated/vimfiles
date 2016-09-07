@@ -14,16 +14,38 @@ nnoremap ;t :let @+ = system('python '.expand('%'))<cr>
 " interactive run
 nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
+let g:py_executable="python"
+nnoremap ;2 :python switch_to_python2()<cr>
+nnoremap ;3 :python switch_to_python3()<cr>
+nnoremap ;r :execute('write \| !start cmd /C "' . expand(g:py_executable) . ' "' . expand('%') . '" & pause"')<cr><cr>
+
 python exec vimimport('py')
 
 python << endpython
-vimpy.command['run'].set('write', '!start cmd /C "python \"%\"" & pause<cr>')
+#vimpy.command['run'].set('write', '!start cmd /C "python \"%\"" & pause<cr>')
+word = lambda text: (text, '((.*\W)|^)(\w+)$', 3)
+keyword = lambda text: (text, '\s*({0})$'.format(text), 1)
+
+def switch_to_python2():
+    word, = switch_to_python3.context
+    vim.command('let g:py_executable="python"')
+    vimpy.completer.added = False
+    vimpy.completer.add(word('p'), '\<bs>print ')
+    vimpy.completer.added = True
+    print 'Switched to Python2'
+switch_to_python2.context = (word,)
+
+def switch_to_python3():
+    word, = switch_to_python3.context
+    vim.command('let g:py_executable=expand("$python3")')
+    vimpy.completer.added = False
+    vimpy.completer.add(word('p'), '\<bs>print()\<left>')
+    vimpy.completer.added = True
+    print 'Switched to Python3'
+switch_to_python3.context = (word,)
 
 if not vimpy.completer.added:
-    # completion
-    word = lambda text: (text, '((.*\W)|^)(\w+)$', 3)
-    keyword = lambda text: (text, '\s*({0})$'.format(text), 1)
-    # keywoards
+    # keywords
     vimpy.completer.auto = True
 
     vimpy.completer.add(keyword('if'), ' :\<left>', auto=True)
@@ -69,6 +91,7 @@ if not vimpy.completer.added:
     vimpy.completer.add(word('it'), '\<bs>\<bs>itertools')
     vimpy.completer.add(word('th'), '\<bs>\<bs>threading')
     vimpy.completer.add(word('qu'), '\<bs>\<bs>Queue')
+    vimpy.completer.add(word('su'), '\<bs>\<bs>subprocess')
     
     # functions
     vimpy.completer.add(word('td'), '\<c-w>timedelta')
