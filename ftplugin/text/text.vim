@@ -1,4 +1,5 @@
 autocmd BufWinEnter *.txt python checkEnos()
+autocmd BufWritePost sentences.txt silent !start /b python "D:\Private\enos\english\send.py"
 nnoremap ;t :py commitEnos()<cr>
 
 python << endpython
@@ -6,8 +7,14 @@ import os
 import subprocess
 import datetime
 import base64
+from multiprocessing import Process
 
 vimpy.command('nmap ;n Go<esc>o<esc>;do')
+
+def uploadEng():
+    def f():
+        os.system(r'python D:\Private\enos\english\send.py')
+    Process(target=f).start()
 
 def checkEnos():
     path = vim.eval('expand("%:p")')
