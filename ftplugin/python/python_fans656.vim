@@ -9,8 +9,8 @@ inoremap { {}<left>
 inoremap ' ''<left>
 inoremap " ""<left>
 
-" read run result into clipboard
-nnoremap ;t :let @+ = system('python '.expand('%'))<cr>
+" run test
+nnoremap ;t :write\|!pytest<cr><cr>
 " interactive run
 nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
