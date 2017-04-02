@@ -3,7 +3,7 @@ from os.path import dirname, join, normpath, basename
 
 import vim
 
-def vimimport(module, symbols=None):
+def vimimport(module, symbols=None, reload=False):
     """
     Get a python statement to import modules:
         # foo.py in current directory
@@ -39,6 +39,8 @@ def vimimport(module, symbols=None):
             stmt = 'import {0} as {1}'.format(name, alias)
         else:
             stmt = 'import {0}'.format(name)
+        if reload:
+            stmt += '; reload({0})'.format(name)
         if symbols:
             stmt += '; from {0} import {1}'.format(name, symbols)
         stmt += '; del sys.path[0]'

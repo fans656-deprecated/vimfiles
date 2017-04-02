@@ -1,25 +1,48 @@
 import datetime
 import re
+import os
 
-import vim
 try:
+    import vim
     from win32api import GetMonitorInfo, MonitorFromWindow
     from win32con import MONITOR_DEFAULTTOPRIMARY
 except ImportError:
     pass
 
+__all__ = [
+    'cursor', 'currow', 'curcol',
+    'curline', 'curchar',
+    'vimrow',
+    'command', 'CommandManager',
+]
+
 def cursor():
+    '''
+    current row and column number
+    '''
     row, col = vim.current.window.cursor
     return (row - 1, col)
 
 def currow():
+    '''
+    current row (index start from 0)
+    '''
     return cursor()[0]
 
 def curcol():
+    '''
+    current column
+    '''
     return cursor()[1]
 
 def curline():
     return vim.current.line
+
+def vimrow():
+    '''
+    current row (index start at 1)
+    '''
+    return currow() + 1
 
 def curchar():
     return curline()[curcol()]
@@ -442,7 +465,18 @@ def openCmd(path=None):
     cmd = 'silent! !start cmd /K "cd /d {0}"'.format(path)
     command(cmd)
 
+def openMintty(path=None):
+    path = vim.eval('expand("%:p:h")')
+    path = path.replace('\\', '/')
+    command(("silent! !start mintty --title \"mintty\" /bin/bash -lc 'cd \"{}\";"
+            + " exec bash'").format(path))
+
 def removeTrailingWhitespaces():
     command('let g:py_view = winsaveview()')
     command('%s/\s\+$//e')
     command('call winrestview(g:py_view)')
+
+if __name__ == '__main__':
+    import sys
+    me = sys.modules[__name__]
+    help(me)

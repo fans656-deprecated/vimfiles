@@ -1,4 +1,4 @@
-nnoremap ;r :write \| !start cmd /C "javac Main.java && java -classpath . Main" & pause<cr><cr>
+nnoremap ;r :write \| !start cmd /C "javac -cp . -encoding utf-8 % && java -cp . -Dfile.encoding=gbk %:r" & pause<cr><cr>
 
 python << endpython
 if not vimpy.completer.added:

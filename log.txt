@@ -5,3 +5,10 @@ py.Completer -> vimpy.Completer
 add 'return' completion to javascript.vim
 add 'for () {}' completion to javascript.vim
 add 'function' completion to javascript.vim
+
+2016-10-14 09:20:29
+准备写个python pdb的vim插件
+
+万里长征第一步
+http://lardcave.net/text/Highlighting%20arbitrary%20lines%20in%20Vim.html
+高亮特定行

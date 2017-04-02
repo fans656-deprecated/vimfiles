@@ -15,10 +15,17 @@ nnoremap ;t :write\|!pytest<cr><cr>
 nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
 let g:py_executable="python"
-nnoremap ;2 :python switch_to_python2()<cr>
-nnoremap ;3 :python switch_to_python3()<cr>
+" nnoremap ;2 :python switch_to_python2()<cr>
+" nnoremap ;3 :python switch_to_python3()<cr>
 nnoremap ;r :execute('write \| !start cmd /C "' . expand(g:py_executable) . ' "' . expand('%') . '" & pause"')<cr><cr>
 
+" debugger
+"python exec vimimport('debugger')
+"nnoremap ;b :python debugger.debugger.toggle_breakpoint()<cr>
+"nnoremap ;d :python debugger.debugger.toggle()<cr>
+"highlight breakpoint guibg=darkred
+
+"
 python exec vimimport('py')
 
 python << endpython

@@ -136,19 +136,25 @@ nmap ,sr ,so;r
 nnoremap ,t<space> :tab<space>
 nnoremap ,te :tabe<space>
 " goto previous tab
-nnoremap <m-[> :tabprevious\|cd %:p:h<cr>
+"nnoremap <m-[> :tabprevious\|cd %:p:h<cr>
+nnoremap ;k :tabprevious\|cd %:p:h<cr>
 " goto next tab
-nnoremap <m-]> :tabnext\|cd %:p:h<cr>
+"nnoremap <m-]> :tabnext\|cd %:p:h<cr>
+nnoremap ;j :tabnext\|cd %:p:h<cr>
 " goto tab 1-9
 for i in range(1, 9)
     execute('nnoremap <a-'.i.'> :tabnext '.i.'\|cd %:p:h<cr>')
+    execute('nnoremap ;'.i.' :tabnext '.i.'\|cd %:p:h<cr>')
 endfor
 " goto last tab
-nnoremap <m-0> :tablast\|cd %:p:h<cr>
+"nnoremap <m-0> :tablast\|cd %:p:h<cr>
+nnoremap ;0 :tablast\|cd %:p:h<cr>
 " move tab to previous
-nnoremap <m-{> :tabmove -1<cr>
+"nnoremap <m-{> :tabmove -1<cr>
+nnoremap ;K :tabmove -1<cr>
 " move tab to next
-nnoremap <m-}> :tabmove +1<cr>
+"nnoremap <m-}> :tabmove +1<cr>
+nnoremap ;J :tabmove +1<cr>
 " move tab to first
 nnoremap <m-s-1> :tabmove 0<cr>
 " move tab to last
@@ -181,6 +187,7 @@ source <sfile>:p:h/vimimport.vim
 
 " insert date and time (2014-08-16 15:23:02)
 nnoremap <silent> ;d :python vimpy.insertDatetime()<cr>
+nnoremap <silent> ;f :exec 'set filetype=' . &filetype \| py print 'set filetype={}'.format(vim.eval('&filetype'))<cr>
 "nnoremap <silent> ;1d o<esc>:python vimpy.insertDatetime()<cr>
 "nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
 "nmap <silent> ;D ;1d
@@ -212,19 +219,8 @@ nnoremap ;; :U<space>
 python vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
 python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
 python vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
+python vimpy.usercmd['mt'] = 'vimpy.openMintty(path)'
 
 inoremap <m-v> <esc>lv
 vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
 vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
-
-python << endpython
-import os
-
-def bufwinenter():
-    fpath = vim.eval('expand("%:p")')
-    basepath = os.path.dirname(fpath)
-    if r'Private\blog' in basepath:
-        vim.command(r'nnoremap ;r :w\|!python "D:\Source\Python\blog_generator\main.py"<cr><cr>')
-endpython
-
-autocmd BufWinEnter * python bufwinenter()
