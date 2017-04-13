@@ -143,7 +143,7 @@ nnoremap ;k :tabprevious\|cd %:p:h<cr>
 nnoremap ;j :tabnext\|cd %:p:h<cr>
 " goto tab 1-9
 for i in range(1, 9)
-    execute('nnoremap <a-'.i.'> :tabnext '.i.'\|cd %:p:h<cr>')
+    "execute('nnoremap <a-'.i.'> :tabnext '.i.'\|cd %:p:h<cr>')
     execute('nnoremap ;'.i.' :tabnext '.i.'\|cd %:p:h<cr>')
 endfor
 " goto last tab
@@ -221,6 +221,7 @@ python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
 python vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
 python vimpy.usercmd['mt'] = 'vimpy.openMintty(path)'
 
-inoremap <m-v> <esc>lv
+"inoremap <m-v> <esc>lv
+inoremap <c-v> <esc>lv
 vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
 vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
