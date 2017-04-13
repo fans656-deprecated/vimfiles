@@ -78,7 +78,8 @@ noremap % M
 " goto matched paren
 noremap M %
 " do recorded action (using register q)
-nnoremap <m-.> @q
+" nnoremap <m-.> @q
+nnoremap <c-.> @q
 
 " clear & insert
 nnoremap ,cl ggcG
