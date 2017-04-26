@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='D:/Source/Python/clrs'
-let g:netrw_dirhist_2='D:\Util\cygwin64'
-let g:netrw_dirhist_3='D:/Source/Python/old/algorithms/clrs/oj/problems'
-let g:netrw_dirhist_4='D:/Private/enos/jobs/algorithm'
-let g:netrw_dirhist_5='D:/Source/Python/foj/static/style'
