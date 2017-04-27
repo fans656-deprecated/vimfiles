@@ -1,0 +1,5 @@
+[user]
+	email = liuwenlong@intern.douban.com
+	name = LiuWenlong
+[alias]
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
