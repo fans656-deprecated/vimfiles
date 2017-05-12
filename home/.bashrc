@@ -1,4 +1,6 @@
 # general
+export PS1="$ "
+
 alias ll="ls -lh"
 alias sb=". ~/.bashrc"
 alias eb="vim ~/.bashrc"
