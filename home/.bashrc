@@ -1,5 +1,5 @@
 # general
-export PS1="$ "
+export PS1="\w$ "
 
 alias ll="ls -lh"
 alias sb=". ~/.bashrc"
