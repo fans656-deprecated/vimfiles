@@ -3,6 +3,10 @@ inoremap " ""<left>
 inoremap <m-O> <c-o>O
 nnoremap ;f :write\|!start cmd /C "phantomjs "%" & pause"<cr><cr>
 
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
 python << endpython
 #vimpy.command['run'].set('write', r'node !{}\t.html'.format(
 #    vim.eval('expand("%:p:h")')))
