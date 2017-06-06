@@ -11,7 +11,7 @@ nnoremap ,f :set foldenable!<cr>
 if has('gui_running')
     nnoremap ;r :execute('write \| !start cmd /C "g++ -std=c++11 "' . expand('%') . '" -o t.exe" && t.exe & pause')<cr><cr>
 else
-    nnoremap ;r :write \| !clear && g++ *.cpp -o a.out && ./a.out<cr>
+    nnoremap ;r :write \| !clear && g++ -std=c++11 % -o a.out && ./a.out<cr>
 endif
 nnoremap ;c :w \| !g++ % -o t.exe<cr>
 nnoremap ;s :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O0 % -o t.s && start gvim t.s & exit"<cr><cr>

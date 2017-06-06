@@ -59,8 +59,6 @@ noremap <m-r> :set relativenumber!<cr>
 nnoremap <c-j> <c-e>
 " scroll up
 nnoremap <c-k> <c-y>
-" quit (conflic with window navigate: c-w l)
-" nnoremap <c-w> :confirm qall<cr>
 " visual line down
 noremap j gj
 " visual line up
@@ -88,11 +86,7 @@ nnoremap ,da ggdG
 
 " clipboard cut copy paste
 " normal mode copy one line
-noremap <m-y> "+yy
-" normal mode copy all
-noremap <m-Y> mzHmxggVG"+yy'xzt`z
-" visual mode copy
-vnoremap <m-y> "+y
+noremap ,Y "+yy
 " normal mode copy all
 " mz  - save cursor pos
 " H   - goto top screen line
@@ -103,15 +97,15 @@ vnoremap <m-y> "+y
 " 'x  - back to marked top screen line
 " zt  - put at top screen
 " `z  - back to marked cursor pos
-noremap <m-s-y> mzHmxggVG"+y'xzt`z
+noremap ,y mzHmxggVG"+yy'xzt`z
+" visual mode copy
+vnoremap ,y "+y
 " normal mode cut one line
-noremap <m-d> "+dd
+noremap ,d "+dd
 " visual mode cut
-vnoremap <m-d> "+d
+vnoremap ,d "+d
 " paste
-noremap <m-p> "+p
-" paste above
-noremap <m-s-p> "+P
+noremap ,p :insert<cr>
 
 " find next char in the line
 noremap \ ;
@@ -119,12 +113,10 @@ noremap \ ;
 nnoremap ;w :w<cr>
 " quit with save
 nnoremap ;q :wq<cr>
-" quit without save
-nnoremap ;Q :q!<cr>
 " quit all with save
 nnoremap ,q :wall \| qall<cr>
 " quit all without save
-nnoremap ,Q :qall!<cr>
+nnoremap ;Q :qall!<cr>
 
 " write & source vimrc & reset filetype
 nnoremap <silent> ,so :write \| source $MYVIMRC \| exe "set filetype=".&filetype<cr><esc>
@@ -157,9 +149,9 @@ nnoremap ;K :tabmove -1<cr>
 "nnoremap <m-}> :tabmove +1<cr>
 nnoremap ;J :tabmove +1<cr>
 " move tab to first
-nnoremap <m-s-1> :tabmove 0<cr>
+nnoremap ;! :tabmove 0<cr>
 " move tab to last
-nnoremap <m-s-0> :tabmove<cr>
+nnoremap ;) :tabmove<cr>
 
 " new line without affect trailing characters
 inoremap <c-j> <end><cr>
@@ -175,7 +167,8 @@ inoremap <c-e> <del>
 " _
 inoremap <c-i> _
 " tab
-inoremap <m-i> <tab>
+inoremap <c-b> <tab>
+
 
 " finetune colorscheme
 highlight CursorLineNr gui=bold guifg='#49646c'
