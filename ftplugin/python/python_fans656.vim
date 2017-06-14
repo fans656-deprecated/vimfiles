@@ -131,6 +131,17 @@ inoremap ;dpu <esc>:python py.defineFunction(withbody=True, underscore=True)<cr>
 inoremap ;is <esc>:python py.assignToSelf()<cr>
 " from __future__ import ...
 inoremap ;fu from __future__ import absolute_import, print_function, division<esc>
+" flask
+inoremap ;fi from flask import Flask<cr>
+    \<cr>
+    \app = Flask(__name__)<cr>
+    \<cr>
+    \@app.route('/')<cr>
+    \def index():<cr>
+    \return 'hello world'<cr>
+    \<cr>
+    \if __name__ == '__main__':<cr>
+    \app.run(host='0.0.0.0', port=6560, threaded=True, debug=True)<esc>
 " PySide
 inoremap ;qi from PySide.QtCore import *<cr>from PySide.QtGui import *<esc>
 " PySide
@@ -143,9 +154,6 @@ inoremap ;qp class Widget(QDialog):<cr>
             \w = Widget()<cr>
             \w.show()<cr>
             \app.exec_()<esc>5k
-
-highlight ColorColumn ctermbg=235 guibg=#004050
-let &colorcolumn="".join(range(80,999),",")
 
 if !has('gui_running')
     nnoremap ;r :write\|!clear; python %<cr>

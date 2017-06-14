@@ -2,10 +2,15 @@ inoremap ' ''<left>
 inoremap " ""<left>
 inoremap <m-O> <c-o>O
 nnoremap ;f :write\|!start cmd /C "phantomjs "%" & pause"<cr><cr>
+nnoremap ;r :write\|!clear && node "%"<cr>
 
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+let g:jsx_ext_required = 0
+
+highlight! link jsStorageClass Keyword
 
 python << endpython
 #vimpy.command['run'].set('write', r'node !{}\t.html'.format(

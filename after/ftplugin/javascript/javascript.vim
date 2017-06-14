@@ -22,3 +22,8 @@ highlight jsOperator  guifg='#72A974'
 " blue
 highlight jsFunction  guifg='#2E5F82'
 highlight jsStorageClass  guifg='#268bd2'
+
+if !has('gui_running')
+    highlight link jsStorageClass Keyword
+    highlight jsObjectKey cterm=bold
+endif

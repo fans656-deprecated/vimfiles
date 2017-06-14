@@ -14,7 +14,7 @@ set nocompatible
 
 let g:hotkey_run = ';r'
 
-let $LANG = 'en_US'
+let $LANG = 'zh_CN:UTF-8'
 set guioptions-=T	" remove toolbar
 set guioptions-=m	" remove menubar
 set noswapfile
@@ -42,10 +42,21 @@ set expandtab
 execute pathogen#infect()
 
 filetype plugin indent on
-syntax enable
 set guifont=Consolas:h10:cANSI
+
+syntax enable
 set background=dark
 colorscheme solarized
+
+let &colorcolumn=join(range(81,999), ",")
+highlight ColorColumn ctermbg=8 guibg=#004050
+highlight Normal ctermbg=0
+
+" finetune colorscheme
+highlight CursorLineNr gui=bold guifg='#49646c'
+highlight MatchParen gui=bold guifg='#839496' guibg='#00556b'
+            \ cterm=underline,bold ctermbg=none ctermfg=none
+nnoremap <F10> :execute 'highlight '.synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
 
 set timeoutlen=500
 
@@ -105,7 +116,8 @@ noremap ,d "+dd
 " visual mode cut
 vnoremap ,d "+d
 " paste
-noremap ,p :insert<cr>
+set pastetoggle=<F5>
+nnoremap ,p :set paste<cr><esc>o
 
 " find next char in the line
 noremap \ ;
@@ -113,10 +125,12 @@ noremap \ ;
 nnoremap ;w :w<cr>
 " quit with save
 nnoremap ;q :wq<cr>
+" quit without save
+nnoremap ;x :q!<cr>
 " quit all with save
 nnoremap ,q :wall \| qall<cr>
 " quit all without save
-nnoremap ;Q :qall!<cr>
+nnoremap ,x :qall!<cr>
 
 " write & source vimrc & reset filetype
 nnoremap <silent> ,so :write \| source $MYVIMRC \| exe "set filetype=".&filetype<cr><esc>
@@ -167,13 +181,7 @@ inoremap <c-e> <del>
 " _
 inoremap <c-i> _
 " tab
-inoremap <c-b> <tab>
-
-
-" finetune colorscheme
-highlight CursorLineNr gui=bold guifg='#49646c'
-highlight MatchParen gui=bold guifg='#839496' guibg='#00556b'
-nnoremap <F10> :execute 'highlight '.synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
+inoremap <c-o> <tab>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " below uses python
