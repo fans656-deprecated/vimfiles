@@ -18,6 +18,8 @@ highlight Statement guifg='#72A974'
 highlight Boolean  guifg='#72A974'
 highlight javaScriptLogicSymbols  guifg='#72A974'
 highlight jsOperator  guifg='#72A974'
+highlight link jsThis Keyword
+highlight link jsSuper Keyword
 
 " blue
 highlight jsFunction  guifg='#2E5F82'
