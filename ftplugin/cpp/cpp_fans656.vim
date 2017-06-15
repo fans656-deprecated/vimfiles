@@ -13,7 +13,6 @@ if has('gui_running')
 else
     nnoremap ;r :write \| !clear && g++ -std=c++11 % -o a.out && ./a.out<cr>
 endif
-nnoremap ;c :w \| !g++ % -o t.exe<cr>
 nnoremap ;s :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O0 % -o t.s && start gvim t.s & exit"<cr><cr>
 nnoremap ;S :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O3 % -o t.s && start gvim t.s & exit"<cr><cr>
 

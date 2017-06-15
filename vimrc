@@ -21,6 +21,7 @@ set noswapfile
 set number
 set relativenumber
 autocmd BufRead * cd %:p:h
+autocmd BufNewFile,BufRead *.tsv set filetype=tsv | set tabstop=8
 autocmd InsertEnter * set norelativenumber
 autocmd InsertLeave * set relativenumber
 set ruler
@@ -94,6 +95,10 @@ nnoremap <c-n> @q
 nnoremap ,cl ggcG
 " delete all
 nnoremap ,da ggdG
+
+nnoremap ;c :python vimpy.to_clipboard()<cr>
+vnoremap ;c :python vimpy.to_clipboard(visual=True)<cr>
+nnoremap ;v :python vimpy.from_clipboard()<cr>
 
 " clipboard cut copy paste
 " normal mode copy one line

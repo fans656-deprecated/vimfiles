@@ -1,4 +1,5 @@
 import datetime
+import subprocess
 import re
 import os
 
@@ -49,6 +50,7 @@ def curchar():
 
 def buffer():
     return vim.current.buffer
+curbuffer = buffer
 
 def prevLines(row=None):
     if not row:
@@ -475,6 +477,44 @@ def removeTrailingWhitespaces():
     command('let g:py_view = winsaveview()')
     command('%s/\s\+$//e')
     command('call winrestview(g:py_view)')
+
+def from_clipboard():
+    cmd = 'curl http://host:6563/clip'
+    cmd += ' -s --connect-timeout 0.3'
+    data = subprocess.check_output(cmd, shell=True)
+    if data:
+        data = data.replace('\r\n', '\n')
+        lines = data.split('\n')
+        row = currow() + 1
+        curbuffer()[row:row] = lines
+    else:
+        raise RuntimeError('cannot access clipboard')
+
+def to_clipboard(visual=False):
+    lines = vim.current.buffer
+    if visual:
+        beg = Cursor('<')
+        end = Cursor('>')
+        lines = lines[beg.row:end.row+1]
+        begline = lines[0]
+        endline = lines[-1]
+        is_virtual_editing = vim.eval('''getpos("<'")''')[3]
+        if is_virtual_editing:
+            beg_col = min(beg.col, end.col)
+            end_col = max(beg.col, end.col)
+            for i, line in enumerate(lines):
+                lines[i] = line[beg_col:end_col + 1]
+        else:
+            lines[0] = begline[beg.col:]
+            lines[-1] = endline[:end.col+1]
+    text = '\n'.join(lines)
+    data = text.replace("'", r"'\''")
+    cmd = '''curl --connect-timeout 0.3 \
+                  -H 'Content-Type: text/plain' \
+                  --data-binary '{}' \
+                  http://host:6563/clip \
+                  1 > /dev/null 2>&1 &'''.format(data)
+    os.system(cmd)
 
 if __name__ == '__main__':
     import sys
