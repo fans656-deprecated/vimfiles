@@ -47,6 +47,8 @@ set guifont=Consolas:h10:cANSI
 
 syntax enable
 set background=dark
+"let t_Co=256
+"let g:solarized_termcolors=256
 colorscheme solarized
 
 let &colorcolumn=join(range(81,999), ",")
@@ -65,6 +67,8 @@ set timeoutlen=500
 noremap! <c-k> <esc>
 inoremap <c-s> <c-k>
 vnoremap <c-k> <esc>
+" page up
+nnoremap <c-d> <c-b>
 " relative line number
 noremap <m-r> :set relativenumber!<cr>
 " scroll down
@@ -232,3 +236,8 @@ python vimpy.usercmd['mt'] = 'vimpy.openMintty(path)'
 inoremap <c-v> <esc>lv
 vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
 vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
+
+hi Comment ctermfg=8 ctermbg=NONE
+hi LineNr ctermfg=8 ctermbg=NONE
+hi TabLineSel cterm=NONE ctermfg=0
+hi ColorColumn cterm=bold ctermbg=0

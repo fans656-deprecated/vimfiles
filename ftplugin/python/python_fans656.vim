@@ -71,7 +71,7 @@ if not vimpy.completer.added:
     vimpy.completer.hotkey = '<c-f>'
     vimpy.completer.add(word('f'), '\<bs>format()\<left>')
     vimpy.completer.add(word('i'), '\<bs>import ')
-    vimpy.completer.add(word('p'), '\<bs>print ')
+    vimpy.completer.add(word('p'), '\<bs>print()\<left>')
     vimpy.completer.add(word('e'), '\<bs>except :\<left>')
     vimpy.completer.add(word('r'), '\<bs>return ')
     vimpy.completer.add(word('ri'), '\<bs>raise ')
@@ -121,6 +121,8 @@ inoremap ;cl <esc>:python py.defineClass()<cr>
 inoremap ;cpl <esc>:python py.defineClass(withbody=True)<cr>
 " define function
 inoremap ;df <esc>:python py.defineFunction()<cr>
+" define async function
+inoremap ;ds <esc>:python py.defineFunction(async_func=True)<cr>
 " define function (pass)
 inoremap ;dpf <esc>:python py.defineFunction(withbody=True)<cr>
 " define __function__
@@ -154,8 +156,24 @@ inoremap ;qp class Widget(QDialog):<cr>
             \w = Widget()<cr>
             \w.show()<cr>
             \app.exec_()<esc>5k
+inoremap ;fl from flask import *<cr>
+    \<cr><cr>
+    \app = Flask(__name__)<cr>
+    \<cr><cr>
+    \@app.after_request<cr>
+    \def after_request(r):<cr>
+    \r.headers['Cache-Control'] = 'no-cache'<cr>
+    \return r<cr>
+    \<cr><cr>
+    \@app.route('/')<cr>
+    \def index():<cr>
+    \return 'hello world'<cr>
+    \<cr><cr>
+    \if __name__ == '__main__':<cr>
+    \app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)
+    \<esc>?hello<cr>
 
 if !has('gui_running')
-    nnoremap ;r :write\|!clear; python %<cr>
-    nnoremap ;i :write\|!clear; python -i %<cr>
+    nnoremap ;r :write\|!clear; python3.7 %<cr>
+    nnoremap ;i :write\|!clear; python3.7 -i %<cr>
 endif

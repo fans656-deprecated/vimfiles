@@ -293,7 +293,6 @@ class Gui(object):
             self.put('bottom right')
         else:
             self.maximize()
-        feed(r'\<c-l>')
 
     def toggleNumLines(self):
         vim.options['lines'] = 40 if vim.options['lines'] <= 25 else 25

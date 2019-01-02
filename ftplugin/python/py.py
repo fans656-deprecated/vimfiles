@@ -63,19 +63,23 @@ def defineClass(withbody=False):
     line = Line()
     name, parents = line.split()
     if not parents:
-        parents = ['object']
+        parents = []
 
-    line.text = '{indent}class {name}({bases}):'.format(
+    if not parents:
+        bases = ''
+    else:
+        bases = '({})'.format(', '.join(parents))
+    line.text = '{indent}class {name}{bases}:'.format(
             indent=line.indentation,
             name=name,
-            bases=', '.join(parents))
+            bases=bases)
     vimpy.feed('A')
     if withbody:
         vimpy.feed(' pass')
     else:
         vimpy.feed('\<cr>\<cr>')
 
-def defineFunction(withbody=False, underscore=False):
+def defineFunction(withbody=False, underscore=False, async_func=False):
     line = Line()
     name, args = line.split()
     if underscore:
@@ -87,10 +91,12 @@ def defineFunction(withbody=False, underscore=False):
     if line.inclass:
         args = ['self'] + args
 
-    line.text = '{indent}def {name}({args}):'.format(
-            indent=line.indentation,
-            name=name,
-            args=', '.join(args))
+    line.text = '{indent}{asy}def {name}({args}):'.format(
+        asy='async ' if async_func else '',
+        indent=line.indentation,
+        name=name,
+        args=', '.join(args),
+    )
     vimpy.feed('A\<cr>')
     if withbody:
         vimpy.feed('pass')

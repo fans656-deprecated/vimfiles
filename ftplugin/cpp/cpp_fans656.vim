@@ -21,7 +21,7 @@ nnoremap <m-O> ko<esc>jO
 
 python exec vimimport('cpp')
 
-inoremap #i #include <><left>
+"inoremap #i #include <><left>
 inoremap ;cls class `` {<cr>public:<cr><cr>private:<cr>};<esc>?``<cr>2s
 inoremap ;main int main() {<cr>}<esc>O
 inoremap ;sco std::cout
@@ -33,7 +33,7 @@ inoremap ;tem template<typename T>
 imap ;tcl ;tem<cr>;cls
 "inoremap << <space><<<space>
 "inoremap >> <space>>><space>
-inoremap s: std::
+"inoremap s: std::
 
 inoremap <m-j> <esc>o
 inoremap <m-h> <left>
