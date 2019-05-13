@@ -174,6 +174,6 @@ inoremap ;fl from flask import *<cr>
     \<esc>?hello<cr>
 
 if !has('gui_running')
-    nnoremap ;r :write\|!clear; python3.7 %<cr>
-    nnoremap ;i :write\|!clear; python3.7 -i %<cr>
+    nnoremap ;r :write\|!clear; python3 %<cr>
+    nnoremap ;i :write\|!clear; python3 -i %<cr>
 endif
