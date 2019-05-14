@@ -104,6 +104,8 @@ nnoremap ;c :python vimpy.to_clipboard()<cr>
 vnoremap ;c :python vimpy.to_clipboard(visual=True)<cr>
 nnoremap ;v :python vimpy.from_clipboard()<cr>
 
+" clipboard copy with xclip
+nnoremap ;y :w !xclip -selection clipboard<cr><cr>
 " clipboard cut copy paste
 " normal mode copy one line
 noremap ,Y "+yy
