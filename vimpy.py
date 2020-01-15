@@ -72,7 +72,7 @@ class Cursor(object):
           Cursor(col=1) # current row
           Cursor(row=1, col=1)
         """
-        if isinstance(row, basestring):
+        if isinstance(row, str):
             name = row
             row, col = vim.current.buffer.mark(name)
             row -= 1 # vim line number begin at 1
@@ -194,7 +194,7 @@ class Line(object):
           line.text = ['foo', 'bar']
         """
         row = self.row
-        if isinstance(text, basestring):
+        if isinstance(text, str):
             text = [text]
         self[:] = text
 
@@ -434,7 +434,7 @@ class Completer(object):
         # so, let's (temporarily) be settled with this inefficient hack
         for m in reversed(matchers):
             if m.matched:
-                print m.action
+                print(m.action)
                 break
 
 completer = Completer()

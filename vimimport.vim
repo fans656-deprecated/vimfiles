@@ -1,4 +1,4 @@
-python << endpython
+python3 << endpython
 import sys
 
 import vim
@@ -9,13 +9,13 @@ import vim
 # then use vimimport() to access any module
 sys.path.insert(0, vim.eval('expand("<sfile>:p:h")'))
 from vimimport import vimimport
-exec vimimport('vimpy')
+exec(vimimport('vimpy'))
 endpython
 
 function! s:GetPythonPrints(stmt)
     let t = @a
     redir @a
-    execute 'python '.a:stmt
+    execute 'python3 '.a:stmt
     redir END
     let r = @a
     let @a = t

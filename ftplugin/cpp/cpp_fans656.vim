@@ -19,7 +19,7 @@ nnoremap ;S :w \| !start cmd /C "g++ -std=c++11 -S -masm=intel -O3 % -o t.s && s
 nnoremap <m-o> jO<esc>ko
 nnoremap <m-O> ko<esc>jO
 
-python exec vimimport('cpp')
+python3 exec(vimimport('cpp'))
 
 "inoremap #i #include <><left>
 inoremap ;cls class `` {<cr>public:<cr><cr>private:<cr>};<esc>?``<cr>2s

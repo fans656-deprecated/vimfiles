@@ -1,7 +1,7 @@
-"python exec vimimport('../../util')
+"python3 exec vimimport('../../util')
 "
-"python mapRun('write', 'source %')
-"python mapPairChar('()')
-"python mapPairChar('[]')
-"python mapPairChar('{}')
-"python mapChar("'", util.insertPairCharLeft, "'", "'")
+"python3 mapRun('write', 'source %')
+"python3 mapPairChar('()')
+"python3 mapPairChar('[]')
+"python3 mapPairChar('{}')
+"python3 mapChar("'", util.insertPairCharLeft, "'", "'")

@@ -94,9 +94,9 @@ nnoremap ,cl ggcG
 " delete all
 nnoremap ,da ggdG
 
-nnoremap ;c :python vimpy.to_clipboard()<cr>
-vnoremap ;c :python vimpy.to_clipboard(visual=True)<cr>
-nnoremap ;v :python vimpy.from_clipboard()<cr>
+nnoremap ;c :python3 vimpy.to_clipboard()<cr>
+vnoremap ;c :python3 vimpy.to_clipboard(visual=True)<cr>
+nnoremap ;v :python3 vimpy.from_clipboard()<cr>
 
 " clipboard copy with xclip
 nnoremap ;y :w !xclip -selection clipboard<cr><cr>
@@ -193,16 +193,16 @@ inoremap <c-o> <tab>
 source <sfile>:p:h/vimimport.vim
 
 " insert date and time (2014-08-16 15:23:02)
-nnoremap <silent> ;d :python vimpy.insertDatetime()<cr>
-nnoremap <silent> ;f :exec 'set filetype=' . &filetype \| py print 'set filetype={}'.format(vim.eval('&filetype'))<cr>
-"nnoremap <silent> ;1d o<esc>:python vimpy.insertDatetime()<cr>
-"nnoremap <silent> ;2d o<esc>o<esc>:python vimpy.insertDatetime()<cr>
+nnoremap <silent> ;d :python3 vimpy.insertDatetime()<cr>
+nnoremap <silent> ;f :exec 'set filetype=' . &filetype \| py3 print 'set filetype={}'.format(vim.eval('&filetype'))<cr>
+"nnoremap <silent> ;1d o<esc>:python3 vimpy.insertDatetime()<cr>
+"nnoremap <silent> ;2d o<esc>o<esc>:python3 vimpy.insertDatetime()<cr>
 "nmap <silent> ;D ;1d
 " maximize/restore gui window
-nnoremap ,m :python vimpy.gui.toggleMaximized()<cr>
-nnoremap ,l :python vimpy.gui.toggleNumLines()<cr>
+nnoremap ,m :python3 vimpy.gui.toggleMaximized()<cr>
+nnoremap ,l :python3 vimpy.gui.toggleNumLines()<cr>
 
-python << endpython
+python3 << endpython
 vimpy.command.add(';r', name='run')
 
 if not vimpy.gui.maximized:
@@ -219,19 +219,19 @@ endpython
 " and used like this:
 "   test ..
 " executeUserCommand() will add the 'Uf6' prefix
-command! -nargs=+ U python vimpy.usercmd.run(<f-args>)
+command! -nargs=+ U python3 vimpy.usercmd.run(<f-args>)
 " press ;; takes you Normal -> (RUC) Command
 nnoremap ;; :U<space>
 
-python vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
-python vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
-python vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
-python vimpy.usercmd['mt'] = 'vimpy.openMintty(path)'
+python3 vimpy.usercmd['od'] = 'vimpy.openDirectory(path)'
+python3 vimpy.usercmd['ta'] = 'vimpy.tabeMultipleFiles(path)'
+python3 vimpy.usercmd['cmd'] = 'vimpy.openCmd(path)'
+python3 vimpy.usercmd['mt'] = 'vimpy.openMintty(path)'
 
 "inoremap <m-v> <esc>lv
 inoremap <c-v> <esc>lv
-vnoremap ( :<c-u>python vimpy.Visual().enclose('(', ')')<cr>
-vnoremap [ :<c-u>python vimpy.Visual().enclose('[', ']')<cr>
+vnoremap ( :<c-u>python3 vimpy.Visual().enclose('(', ')')<cr>
+vnoremap [ :<c-u>python3 vimpy.Visual().enclose('[', ']')<cr>
 
 hi Comment ctermfg=8 ctermbg=NONE
 hi LineNr ctermfg=8 ctermbg=NONE

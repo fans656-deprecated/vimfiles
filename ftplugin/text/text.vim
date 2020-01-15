@@ -1,8 +1,8 @@
-autocmd BufWinEnter *.txt python checkEnos()
-autocmd BufWritePost sentences.txt silent !start /b python "D:\Private\enos\english\send.py"
+autocmd BufWinEnter *.txt python3 checkEnos()
+autocmd BufWritePost sentences.txt silent !start /b python3 "D:\Private\enos\english\send.py"
 nnoremap ;t :py commitEnos()<cr>
 
-python << endpython
+python3 << endpython
 import os
 import subprocess
 import datetime
@@ -13,7 +13,7 @@ vimpy.command('nmap ;n Go<esc>o<esc>;do')
 
 def uploadEng():
     def f():
-        os.system(r'python D:\Private\enos\english\send.py')
+        os.system(r'python3 D:\Private\enos\english\send.py')
     Process(target=f).start()
 
 def checkEnos():
@@ -24,7 +24,7 @@ def checkEnos():
         vimpy.usercmd['upload'] = 'uploadEnos()'
         vimpy.usercmd['commit'] = 'commitEnos()'
     if r'\blog\content' in path:
-        vim.command(r'nnoremap ;r :w\|!python "D:\Source\Python\blog_generator\main.py"<cr><cr>')
+        vim.command(r'nnoremap ;r :w\|!python3 "D:\Source\Python\blog_generator\main.py"<cr><cr>')
         
 def uploadEnos(path=None):
     commitEnos(path)

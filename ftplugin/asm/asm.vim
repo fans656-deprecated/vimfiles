@@ -4,7 +4,7 @@ if has('gui_running')
 endif
 let g:current_file = expand("%:p")
 
-python << endpython
+python3 << endpython
 import vim
 import os
 vimrc_path = vim.eval('$MYVIMRC')
@@ -14,7 +14,7 @@ fpath = os.path.join(home_path, 'ftplugin', file_type, 'strip.py')
 target_fpath = vim.eval('g:current_file')
 strip_commands = (
     'exec \'normal ,da\'',
-    'exec \'read !python "{}" {}\''.format(fpath, target_fpath),
+    'exec \'read !python3 "{}" {}\''.format(fpath, target_fpath),
     'exec \'normal ggdd\''
 )
 vim.command(('nnoremap ;s :' + 
