@@ -14,7 +14,7 @@ nnoremap ;t :write\|!pytest<cr><cr>
 " interactive run
 nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
-let g:py_executable="python"
+let g:py_executable="python3.7"
 " nnoremap ;2 :python switch_to_python2()<cr>
 " nnoremap ;3 :python switch_to_python3()<cr>
 nnoremap ;r :execute('write \| !start cmd /C "' . expand(g:py_executable) . ' "' . expand('%') . '" & pause"')<cr><cr>
@@ -174,6 +174,6 @@ inoremap ;fl from flask import *<cr>
     \<esc>?hello<cr>
 
 if !has('gui_running')
-    nnoremap ;r :write\|!clear; python3 %<cr>
+    nnoremap ;r :write\|!clear; python3.7 %<cr>
     nnoremap ;i :write\|!clear; python3 -i %<cr>
 endif
