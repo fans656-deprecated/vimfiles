@@ -16,13 +16,10 @@ def vimimport(module, symbols=None, reload=False):
     """
 
     def getModulePathAndAlias(path):
-        # maybe 'foo as fo'
-        names = path.split(' as ')
-        # 'foo as fo'
-        if len(names) == 2:
+        names = path.split(' as ')  # maybe 'foo as fo'
+        if len(names) == 2:  # 'foo as fo'
             path, alias = names
-        # 'foo'
-        else:
+        else:  # 'foo'
             path, alias = names[0], None
         return path, alias
 
