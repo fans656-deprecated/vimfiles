@@ -10,3 +10,6 @@
 [submodule "bundle/vim-jsx"]
 	path = bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
+[submodule "pack/vendor/start/nerdtree"]
+	path = pack/vendor/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
