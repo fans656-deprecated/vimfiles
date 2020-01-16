@@ -171,6 +171,8 @@ nnoremap ;J :tabmove +1<cr>
 nnoremap ;! :tabmove 0<cr>
 " move tab to last
 nnoremap ;) :tabmove<cr>
+" NERDTree
+nnoremap ;t :NERDTreeToggle<cr>
 
 " new line without affect trailing characters
 inoremap <c-j> <end><cr>

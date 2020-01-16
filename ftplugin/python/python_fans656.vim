@@ -10,7 +10,7 @@ inoremap ' ''<left>
 inoremap " ""<left>
 
 " run test
-nnoremap ;t :write\|!pytest<cr><cr>
+" nnoremap ;t :write\|!pytest<cr><cr>
 " interactive run
 nnoremap ;i :write\|!start cmd /C "python -i "%""<cr><cr>
 
