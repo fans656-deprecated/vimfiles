@@ -12,7 +12,7 @@ from vimimport import vimimport
 exec(vimimport('vimpy'))
 endpython
 
-function! s:GetPythonPrints(stmt)
+function! GetPythonPrints(stmt)
     let t = @a
     redir @a
     execute 'python3 '.a:stmt
@@ -23,16 +23,16 @@ function! s:GetPythonPrints(stmt)
     return r[1:]
 endfunction
 
-function! s:InterpolateVimKeys(str)
+function! InterpolateVimKeys(str)
     " escape double quote
     let str = substitute(a:str, '"', '\\"', 'g')
     return eval('"'.str.'"')
 endfunction
 
 function! InsertPythonPrints(stmt)
-    return s:InterpolateVimKeys(s:GetPythonPrints(a:stmt))
+    return InterpolateVimKeys(GetPythonPrints(a:stmt))
 endfunction
 
 function! FeedPythonPrints(stmt)
-    call feedkeys(s:InterpolateVimKeys(s:GetPythonPrints(a:stmt)))
+    call feedkeys(InterpolateVimKeys(GetPythonPrints(a:stmt)))
 endfunction

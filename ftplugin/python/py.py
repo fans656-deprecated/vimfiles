@@ -106,6 +106,6 @@ def assignToSelf():
     vs = line.text.split()
     f = lambda var: '{indent}self.{var} = {var}'.format(
             indent=line.indentation, var=var)
-    lines = map(f, vs)
+    lines = list(map(f, vs))
     line.text = lines
     vimpy.feed('{0}jo'.format(len(lines) - 1))

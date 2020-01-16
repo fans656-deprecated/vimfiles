@@ -241,7 +241,7 @@ class Command:
 
     def set(self, *cmds):
         self.cmds = cmds
-        # nnoremap ;r :write \| !python %<cr>
+        # nnoremap ;r :write \| !python3 %<cr>
         command('nnoremap {0} :{1}<cr>'.format(self.seq, '\\|'.join(cmds)))
 
 class CommandManager:
@@ -251,7 +251,7 @@ class CommandManager:
 
         # set named normal command
         command.add(';r', name='run') # in vimrc
-        command['run'].set('write', '!python %') # in python.vim
+        command['run'].set('write', '!python3 %') # in python.vim
         command['run'].set('write', 'source %') # in vim.vim
     """
 
@@ -330,7 +330,7 @@ class UserCommand(object):
         stmt = '{name}({args})'.format(
                 name=self.funcname,
                 args=args)
-        command('python exec {0}'.format(stmt))
+        command('python3 exec({0})'.format(stmt))
 
 class UserCommandManager(object):
 
@@ -361,23 +361,30 @@ class LineMatcher(object):
             self.groupindex = groupindex
 
         def check(self, text):
+            #print('check', (text, self.target, self.extractor))
             if self.extractor:
+                #print('check re.match with extractor', (self.target, text))
                 try:
                     text = re.match(self.extractor, text).group(self.groupindex)
                 except AttributeError:
                     return False
                 return text == self.target
             else:
+                #print('check re.match without extractor', (self.target, text))
                 return re.match(self.target, text)
 
     def __init__(self, left, right, action=None):
+        self.left = left
+        self.right = right
         if not action:
             right, action = '', right
-        self.checkers = map(LineMatcher.Checker, (left, right))
+        self.checkers = list(map(LineMatcher.Checker, (left, right)))
         self.action = action
 
     def match(self, line):
-        return all(c.check(t) for c, t in zip(self.checkers, line.splitByCol()))
+        r = all(c.check(t) for c, t in zip(self.checkers, line.splitByCol()))
+        #print('match result', (self.left, self.right, self.checkers, r))
+        return r
 
     @property
     def matched(self):
