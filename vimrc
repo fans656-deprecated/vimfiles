@@ -242,6 +242,6 @@ hi ColorColumn cterm=bold ctermbg=0
 
 syntax enable
 set background=dark
-"let t_Co=256
-"let g:solarized_termcolors=256
+let t_Co=256
+let g:solarized_termcolors=256
 colorscheme solarized
